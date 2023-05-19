@@ -1,0 +1,11 @@
+{
+  "expo": {
+    "name": "DocFinder",
+    "slug": "DocFinder",
+    "version": "1.0.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  },
+  "name": "DocFinder"
+}

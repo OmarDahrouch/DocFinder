@@ -469,7 +469,6 @@ android/*.log
 *.jsbundle
 *.bundle
 *.hprof
-*.json
 *.zip
 *.plist
 
