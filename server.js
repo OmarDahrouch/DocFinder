@@ -21,6 +21,14 @@ const appointmentRoute = require("./routes/appointmentRoute");
 app.use(bodyParser.json());
 app.use(appointmentRoute);
 
+// Middleware pour l'api des reviews---------------------------------
+
+require("./models/reviews");
+
+const reviewsRoute = require("./routes/reviewsRoute");
+app.use(bodyParser.json());
+app.use(reviewsRoute);
+
 // DataBase Config ----------------------------------------------------
 
 mongoose.connect(mogoUrl);

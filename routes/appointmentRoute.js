@@ -33,6 +33,7 @@ router.post("/appointments", async (req, res) => {
 });
 
 // ------------GET route to fetch all appointments
+
 router.get("/appointments", async (req, res) => {
   try {
     const appointments = await Appointment.find();
