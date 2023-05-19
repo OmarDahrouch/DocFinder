@@ -33,6 +33,7 @@ router.post("/appointments", async (req, res) => {
 });
 
 // ------------GET route to fetch all appointments
+
 router.get("/appointments", async (req, res) => {
   try {
     const appointments = await Appointment.find();
@@ -43,6 +44,7 @@ router.get("/appointments", async (req, res) => {
 });
 
 // GET route to fetch a specific appointment by ID
+
 router.get("/appointments/:id", async (req, res) => {
   try {
     const appointment = await Appointment.findById(req.params.id);
