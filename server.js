@@ -21,6 +21,14 @@ const appointmentRoute = require("./routes/appointmentRoute");
 app.use(bodyParser.json());
 app.use(appointmentRoute);
 
+// Middleware pour l'api des docteurs---------------------------------
+
+require("./models/doctors");
+
+const doctorRoute = require("./routes/doctorRoute");
+app.use(bodyParser.json());
+app.use(doctorRoute);
+
 // DataBase Config ----------------------------------------------------
 
 mongoose.connect(mogoUrl);

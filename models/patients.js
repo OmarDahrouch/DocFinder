@@ -10,6 +10,7 @@ const patientSchema = new mongoose.Schema({
     validate: {
       validator: validator.isEmail,
       message: "Invalid email address",
+      unique: true,
     },
   },
   password: { type: String, required: true },
