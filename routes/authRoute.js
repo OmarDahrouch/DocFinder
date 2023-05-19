@@ -45,26 +45,40 @@ router.get("/patients", (req, res) => {
 });
 
 // Route to update a patient
+
 router.put("/patients/:id", (req, res) => {
   const { id } = req.params;
   const { first_name, last_name, email, password, phone_number, address } =
     req.body;
 
-  Patient.findByIdAndUpdate(
-    id,
-    { first_name, last_name, email, password, phone_number, address },
-    { new: true }
-  )
-    .then((updatedPatient) => {
-      if (!updatedPatient) {
-        return res.status(404).send("Patient not found");
-      }
-      res.json(updatedPatient);
-    })
-    .catch((error) => {
-      console.error(error);
-      res.status(500).send("Error");
-    });
+  // Hash the password
+  bcrypt.hash(password, 10, (err, hashedPassword) => {
+    if (err) {
+      console.error(err);
+      return res.status(500).send("Error");
+    }
+
+    const updatedPatient = {
+      first_name,
+      last_name,
+      email,
+      password: hashedPassword,
+      phone_number,
+      address,
+    };
+
+    Patient.findByIdAndUpdate(id, updatedPatient, { new: true })
+      .then((updatedPatient) => {
+        if (!updatedPatient) {
+          return res.status(404).send("Patient not found");
+        }
+        res.json(updatedPatient);
+      })
+      .catch((error) => {
+        console.error(error);
+        res.status(500).send("Error");
+      });
+  });
 });
 
 // Route to delete a patient
