@@ -8,25 +8,24 @@ import {
 } from "react-native";
 import CustomInput from "../components/CustomInput";
 import CustomButton from "../components/CustomButton";
-import { useNavigation } from "@react-navigation/native";
+// import { useNavigation } from "@react-navigation/native";
 import axios from "axios";
 
 const SignInScreen = () => {
-  // const { height } = useWindowDimensions();
-  const navigation = useNavigation();
+  // const navigation = useNavigation();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [successMessage, setSuccessMessage] = useState(""); // State variable for success message
 
   const onSignInPressed = async () => {
     try {
       const response = await axios.post(
-        "https://localhost:3000/patients/signin",
+        "http://192.168.100.216:3000/patients/signin",
         {
           email,
           password,
         }
       );
-
       // Handle the response from the backend
       console.log(response.data); // Assuming the response contains a token or user information
 
@@ -34,8 +33,9 @@ const SignInScreen = () => {
       setEmail("");
       setPassword("");
 
-      // Redirect to the home screen on successful sign-in
-      navigation.navigate("Home");
+      // Set the success message
+      setSuccessMessage("Sign in successful");
+      Alert.alert("Success", "Logged In Successfuly !!");
     } catch (error) {
       // Handle error
       console.log(error);
@@ -72,7 +72,7 @@ const SignInScreen = () => {
 const styles = StyleSheet.create({
   root: {
     alignItems: "center",
-    padding: 20,
+    padding: 200,
   },
 });
 
