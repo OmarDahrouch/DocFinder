@@ -40,7 +40,7 @@ async function createDoctor(req, res) {
 
 //-------get all doctors
 
-function getDoctor(req, res) {
+function getDoctors(req, res) {
   Doctor.find()
     .then((doctors) => {
       res.json(doctors);
@@ -48,6 +48,21 @@ function getDoctor(req, res) {
     .catch((error) => {
       console.error(error);
       res.status(500).send("Error");
+    });
+}
+
+// get doctor by name
+
+function getDoctorBy(req, res) {
+  const filters = req.query;
+
+  Doctor.find(filters)
+    .then((filteredDoctors) => {
+      res.json(filteredDoctors);
+    })
+    .catch((error) => {
+      console.error(error);
+      res.status(500).json({ error: "Internal server error" });
     });
 }
 
@@ -147,7 +162,8 @@ async function signinDoctor(req, res) {
 
 module.exports = {
   createDoctor,
-  getDoctor,
+  getDoctors,
+  getDoctorBy,
   updateDoctor,
   deleteDoctor,
   signinDoctor,
