@@ -53,17 +53,23 @@ function getDoctors(req, res) {
 
 // get doctor by name
 
-function getDoctorBy(req, res) {
-  const filters = req.query;
+async function getDoctorBy(req, res) {
+  const searchTerm = req.query.q; // Get the search term from the query parameters
 
-  Doctor.find(filters)
-    .then((filteredDoctors) => {
-      res.json(filteredDoctors);
-    })
-    .catch((error) => {
-      console.error(error);
-      res.status(500).json({ error: "Internal server error" });
+  try {
+    const searchResults = await Doctor.find({
+      $or: [
+        { first_name: { $regex: searchTerm, $options: "i" } },
+        { last_name: { $regex: searchTerm, $options: "i" } },
+        { location: { $regex: searchTerm, $options: "i" } },
+      ],
     });
+
+    res.json(searchResults);
+  } catch (error) {
+    console.error("Error fetching data:", error);
+    res.status(500).json({ error: "An error occurred while fetching data" });
+  }
 }
 
 //-------update a doctor

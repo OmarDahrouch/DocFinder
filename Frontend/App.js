@@ -3,13 +3,15 @@ import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 // import Navigation from "./navigation";
 import SignInScreen from "./screens/SignInScreen";
-import SearchBar from "./components/searchBar";
+import SignUpScreen from "./screens/SignupScreen";
+import HomeScreen from "./screens/HomeScreen";
+import BarSearch from "./components/searchBar";
 
 export default function App() {
   return (
     <View style={styles.container}>
       {/* <Navigation /> */}
-      <SearchBar />
+      <HomeScreen />
       <StatusBar style="auto" />
     </View>
   );
@@ -19,7 +21,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#fff",
-    alignItems: "center",
+    //alignItems: "center",
     justifyContent: "center",
   },
 });
