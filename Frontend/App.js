@@ -5,6 +5,7 @@ import { StyleSheet, Text, View } from "react-native";
 import SignInScreen from "./screens/SignInScreen";
 import SignUpScreen from "./screens/SignupScreen";
 import HomeScreen from "./screens/HomeScreen";
+import BarSearch from "./components/searchBar";
 
 export default function App() {
   return (
@@ -20,7 +21,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#fff",
-    alignItems: "center",
+    //alignItems: "center",
     justifyContent: "center",
   },
 });

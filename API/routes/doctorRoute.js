@@ -2,7 +2,8 @@ const express = require("express");
 const router = express.Router();
 const {
   createDoctor,
-  getDoctor,
+  getDoctors,
+  getDoctorBy,
   updateDoctor,
   deleteDoctor,
   signinDoctor,
@@ -12,7 +13,10 @@ const {
 router.post("/doctor", createDoctor);
 
 // Route to get all patients
-router.get("/doctors", getDoctor);
+router.get("/doctors", getDoctors);
+
+// Route to get  patient by name or ....
+router.get("/doctor", getDoctorBy);
 
 // Route to update a patient
 router.put("/doctor/:id", updateDoctor);
