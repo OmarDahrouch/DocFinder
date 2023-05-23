@@ -2,6 +2,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const Patient = mongoose.model("Patient");
 const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
 
 //---------create a new Patient
 
@@ -100,25 +101,52 @@ function deletePatient(req, res) {
 
 //----sign in a Patient
 
+// async function signinPatient(req, res) {
+//   const { email, password } = req.body;
+
+//   try {
+//     // Check if the patient exists
+//     const patient = await Patient.findOne({ email });
+
+//     if (!patient) {
+//       return res.status(401).json({ message: "Invalid credentials" });
+//     }
+
+//     // Compare the provided password with the stored hashed password
+//     const passwordMatch = await bcrypt.compare(password, patient.password);
+
+//     if (!passwordMatch) {
+//       return res.status(401).json({ message: "Invalid credentials" });
+//     }
+
+//     res.json({ message: "Success" });
+//   } catch (error) {
+//     console.error(error);
+//     res.status(500).send("Error");
+//   }
+// }
+
 async function signinPatient(req, res) {
   const { email, password } = req.body;
 
   try {
-    // Check if the patient exists
     const patient = await Patient.findOne({ email });
 
     if (!patient) {
       return res.status(401).json({ message: "Invalid credentials" });
     }
 
-    // Compare the provided password with the stored hashed password
     const passwordMatch = await bcrypt.compare(password, patient.password);
 
     if (!passwordMatch) {
       return res.status(401).json({ message: "Invalid credentials" });
     }
 
-    res.json({ message: "Success" });
+    const token = jwt.sign({ id: patient._id }, config.jwtSecret, {
+      expiresIn: config.jwtExpiration,
+    });
+
+    res.json({ message: "Success", token });
   } catch (error) {
     console.error(error);
     res.status(500).send("Error");

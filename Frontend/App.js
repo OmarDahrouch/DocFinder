@@ -4,13 +4,14 @@ import { StyleSheet, Text, View } from "react-native";
 // import Navigation from "./navigation";
 import SignInScreen from "./screens/SignInScreen";
 import SignUpScreen from "./screens/SignupScreen";
+import ForgotPasswordScreen from "./screens/ForgotPasswordScreen";
 import HomeScreen from "./screens/HomeScreen";
 
 export default function App() {
   return (
     <View style={styles.container}>
       {/* <Navigation /> */}
-      <HomeScreen />
+      <ForgotPasswordScreen />
       <StatusBar style="auto" />
     </View>
   );
