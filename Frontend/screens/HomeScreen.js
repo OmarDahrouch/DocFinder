@@ -12,7 +12,7 @@ const HomeScreen = () => {
 
   const fetchDoctors = async () => {
     try {
-      const response = await axios.get("http://192.168.100.216:3000/doctors");
+      const response = await axios.get("http://192.168.2.102:3000/doctors");
       setDoctors(response.data);
     } catch (error) {
       console.log(error);

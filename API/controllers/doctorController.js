@@ -40,7 +40,7 @@ async function createDoctor(req, res) {
 
 //-------get all doctors
 
-function getDoctor(req, res) {
+function getDoctors(req, res) {
   Doctor.find()
     .then((doctors) => {
       res.json(doctors);
@@ -49,6 +49,27 @@ function getDoctor(req, res) {
       console.error(error);
       res.status(500).send("Error");
     });
+}
+
+// get doctor by name
+
+async function getDoctorBy(req, res) {
+  const searchTerm = req.query.q; // Get the search term from the query parameters
+
+  try {
+    const searchResults = await Doctor.find({
+      $or: [
+        { first_name: { $regex: searchTerm, $options: "i" } },
+        { last_name: { $regex: searchTerm, $options: "i" } },
+        { location: { $regex: searchTerm, $options: "i" } },
+      ],
+    });
+
+    res.json(searchResults);
+  } catch (error) {
+    console.error("Error fetching data:", error);
+    res.status(500).json({ error: "An error occurred while fetching data" });
+  }
 }
 
 //-------update a doctor
@@ -147,7 +168,8 @@ async function signinDoctor(req, res) {
 
 module.exports = {
   createDoctor,
-  getDoctor,
+  getDoctors,
+  getDoctorBy,
   updateDoctor,
   deleteDoctor,
   signinDoctor,
