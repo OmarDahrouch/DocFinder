@@ -4,7 +4,6 @@ const Patient = mongoose.model("Patient");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const config = require("../config");
-c;
 
 // Generate a JWT token
 function generateToken(patientId) {
@@ -33,7 +32,10 @@ async function createPatient(req, res) {
     });
 
     await patient.save();
-    res.send("Success");
+
+    const token = generateToken(patient._id);
+
+    res.json({ message: "Success", token });
   } catch (error) {
     console.error(error);
     res.status(500).send("Error");
