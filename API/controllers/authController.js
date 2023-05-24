@@ -3,7 +3,16 @@ const mongoose = require("mongoose");
 const Patient = mongoose.model("Patient");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const config = require("../config");
+c;
 
+// Generate a JWT token
+function generateToken(patientId) {
+  const token = jwt.sign({ id: patientId }, config.jwtSecret, {
+    expiresIn: config.jwtExpiration,
+  });
+  return token;
+}
 //---------create a new Patient
 
 async function createPatient(req, res) {
@@ -31,17 +40,25 @@ async function createPatient(req, res) {
   }
 }
 
-//-------get all Patients
+// Get all patients or signed in patient
 
-function getPatient(req, res) {
-  Patient.find()
-    .then((patients) => {
-      res.json(patients);
-    })
-    .catch((error) => {
-      console.error(error);
-      res.status(500).send("Error");
-    });
+function getPatients(req, res) {
+  // Check if the patient object is attached to the request
+  if (req.patient) {
+    // Return the information of the currently signed-in patient
+    const { patient } = req;
+    res.json({ patient });
+  } else {
+    // Continue with the existing logic to fetch all patients
+    Patient.find()
+      .then((patients) => {
+        res.json(patients);
+      })
+      .catch((error) => {
+        console.error(error);
+        res.status(500).send("Error");
+      });
+  }
 }
 
 //-------update a Patient
@@ -99,33 +116,6 @@ function deletePatient(req, res) {
     });
 }
 
-//----sign in a Patient
-
-// async function signinPatient(req, res) {
-//   const { email, password } = req.body;
-
-//   try {
-//     // Check if the patient exists
-//     const patient = await Patient.findOne({ email });
-
-//     if (!patient) {
-//       return res.status(401).json({ message: "Invalid credentials" });
-//     }
-
-//     // Compare the provided password with the stored hashed password
-//     const passwordMatch = await bcrypt.compare(password, patient.password);
-
-//     if (!passwordMatch) {
-//       return res.status(401).json({ message: "Invalid credentials" });
-//     }
-
-//     res.json({ message: "Success" });
-//   } catch (error) {
-//     console.error(error);
-//     res.status(500).send("Error");
-//   }
-// }
-
 async function signinPatient(req, res) {
   const { email, password } = req.body;
 
@@ -142,21 +132,53 @@ async function signinPatient(req, res) {
       return res.status(401).json({ message: "Invalid credentials" });
     }
 
-    const token = jwt.sign({ id: patient._id }, config.jwtSecret, {
-      expiresIn: config.jwtExpiration,
-    });
-
-    res.json({ message: "Success", token });
+    const token = generateToken(patient._id);
+    res.json({ message: "Success", token }); // Include the token in the response
   } catch (error) {
     console.error(error);
     res.status(500).send("Error");
   }
 }
 
+// Middleware to verify JWT token and attach patient object to request
+
+function verifyToken(req, res, next) {
+  const token = req.headers.authorization;
+
+  if (!token) {
+    return res.status(401).json({ message: "Token not provided" });
+  }
+
+  jwt.verify(token, config.jwtSecret, (err, decodedToken) => {
+    if (err) {
+      console.error(err);
+      return res.status(401).json({ message: "Invalid token" });
+    }
+
+    const patientId = decodedToken.id;
+
+    // Fetch the patient object and attach it to the request
+    Patient.findById(patientId)
+      .then((patient) => {
+        if (!patient) {
+          return res.status(404).json({ message: "Patient not found" });
+        }
+
+        req.patient = patient;
+        next();
+      })
+      .catch((error) => {
+        console.error(error);
+        res.status(500).send("Error");
+      });
+  });
+}
+
 module.exports = {
   createPatient,
-  getPatient,
+  getPatients,
   updatePatient,
   deletePatient,
   signinPatient,
+  verifyToken,
 };

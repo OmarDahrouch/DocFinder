@@ -3,17 +3,18 @@ const bcrypt = require("bcrypt");
 const router = express.Router();
 const {
   createPatient,
-  getPatient,
+  getPatients,
   updatePatient,
   deletePatient,
   signinPatient,
+  verifyToken,
 } = require("../controllers/authController");
 
 // Route to post a new patient
-router.post("/patients", createPatient);
+router.post("/patients/signup", createPatient);
 
 // Route to get all patients
-router.get("/patients", getPatient);
+router.get("/patients", verifyToken, getPatients);
 
 // Route to update a patient
 router.put("/patients/:id", updatePatient);

@@ -1,52 +1,40 @@
 import React, { useState } from "react";
-import {
-  View,
-  StyleSheet,
-  // useWindowDimensions,
-  ScrollView,
-  Alert,
-} from "react-native";
+import { View, StyleSheet, ScrollView, Alert } from "react-native";
 import CustomInput from "../components/CustomInput";
 import CustomButton from "../components/CustomButton";
-// import { useNavigation } from "@react-navigation/native";
 import axios from "axios";
+import { useNavigation } from "@react-navigation/native";
 
 const SignInScreen = () => {
-  // const navigation = useNavigation();
+  const navigation = useNavigation();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [successMessage, setSuccessMessage] = useState(""); // State variable for success message
+  const [successMessage, setSuccessMessage] = useState("");
 
   const onSignInPressed = async () => {
     try {
       const response = await axios.post(
-        "http://192.168.100.216:3000/patients/signin",
+        "http://192.168.100.7:3000/patients/signin",
         {
           email,
           password,
         }
       );
-      // Handle the response from the backend
-      console.log(response.data); // Assuming the response contains a token or user information
 
-      // Reset the form
+      console.log(response.data);
       setEmail("");
       setPassword("");
-
-      // Set the success message
       setSuccessMessage("Sign in successful");
-      Alert.alert("Success", "Logged In Successfuly !!");
+      Alert.alert("Success", "Logged In Successfully !!");
+      navigation.navigate("PatientAccount");
     } catch (error) {
-      // Handle error
       console.log(error);
-
-      // Show an error message to the user
       Alert.alert("Error", "Failed to sign in. Please try again.");
     }
   };
 
   return (
-    <ScrollView showsVerticalScrollIndicator={false}>
+    <ScrollView contentContainerStyle={styles.container}>
       <View style={styles.root}>
         <CustomInput
           name="email"
@@ -70,9 +58,14 @@ const SignInScreen = () => {
 };
 
 const styles = StyleSheet.create({
-  root: {
+  container: {
+    flex: 1,
+    justifyContent: "center",
     alignItems: "center",
-    padding: 200,
+  },
+  root: {
+    width: "80%",
+    padding: 20,
   },
 });
 

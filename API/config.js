@@ -1,5 +1,5 @@
 module.exports = {
   jwtSecret:
-    "eyJhbGciOiJIUzI1NiJ9.eyJSb2xlIjoiQWRtaW4iLCJJc3N1ZXIiOiJJc3N1ZXIiLCJVc2VybmFtZSI6IkphdmFJblVzZSIsImV4cCI6MTY4NDg0MDgzMiwiaWF0IjoxNjg0ODQwODMyfQ.T3EkMi0wvxu9qg203zKwsFiYohbeb3mTh-31N9Qe5oY",
-  jwtExpiration: "24h",
+    "7487fd865af166e52ad42fb33210b4e414493aec7fa99bf42d3581fd36ca678ec7ef60efe3f8c2487ed61aa14402a89cdf5d1c58614559161691bbdd92633a3d",
+  jwtExpiration: "48h",
 };
