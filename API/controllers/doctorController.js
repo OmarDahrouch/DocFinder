@@ -51,6 +51,19 @@ function getDoctors(req, res) {
     });
 }
 
+//get doctor by id
+async function getaDoctor(req, res) {
+  try {
+    const doctor = await Doctor.findById(req.params.id);
+
+    if (!doctor) {
+      return res.status(404).json({ error: "Doctor not found" });
+    }
+    res.json(doctor);
+  } catch (error) {
+    res.status(500).json({ error: "Failed to fetch Doctor" });
+  }
+}
 // get doctor by name
 
 async function getDoctorBy(req, res) {
@@ -170,6 +183,7 @@ module.exports = {
   createDoctor,
   getDoctors,
   getDoctorBy,
+  getaDoctor,
   updateDoctor,
   deleteDoctor,
   signinDoctor,

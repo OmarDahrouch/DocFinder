@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { TextInput, View, StyleSheet, FlatList } from "react-native";
+import { View, StyleSheet, FlatList } from "react-native";
 import DoctorItem from "../components/DoctorItem";
 import { SearchBar } from "react-native-elements";
 
-const BarSearch = () => {
+const BarSearch = ({ navigation }) => {
   const [searchQuery, setSearchQuery] = useState("");
   const [searchResults, setSearchResults] = useState([]);
   const [loading, setLoading] = useState("false");
@@ -30,7 +30,7 @@ const BarSearch = () => {
   }, []);
 
   const renderDoctor = ({ item }) => {
-    return <DoctorItem doctor={item} />;
+    return <DoctorItem doctor={item} navigation={navigation} />;
   };
 
   return (
@@ -42,6 +42,7 @@ const BarSearch = () => {
         round
       />
       {/* Render the search results if they are defined */}
+
       <FlatList
         data={searchResults}
         renderItem={renderDoctor}
