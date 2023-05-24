@@ -1,65 +1,71 @@
 import React, { useEffect, useState } from "react";
 import { View, Text, StyleSheet } from "react-native";
-import { useNavigation } from "@react-navigation/native";
+import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-const PatientInfoScreen = () => {
+const PatientAccount = () => {
   const [patient, setPatient] = useState(null);
-  const [token, setToken] = useState("");
 
   useEffect(() => {
-    // Fetch patient information from the backend API
-    fetchPatientInfo();
-  }, [token]); // Include 'token' as a dependency
-
-  const fetchPatientInfo = async () => {
-    try {
-      const response = await fetch("http://192.168.100.7:3000/patients", {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-
-      if (response.ok) {
-        const data = await response.json();
-        const currentPatient = data.patient;
-        setPatient(currentPatient);
-      } else {
-        console.error("Failed to fetch patient information");
-      }
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  useEffect(() => {
-    // Retrieve the token from AsyncStorage and set it in state
-    const retrieveToken = async () => {
+    const fetchPatientInfo = async () => {
       try {
-        const storedToken = await AsyncStorage.getItem("jwtToken");
-        setToken(storedToken);
+        const token = await AsyncStorage.getItem("token");
+
+        if (!token) {
+          // Token not found, handle the error or redirect to sign-in
+          console.log("Token not found");
+          return;
+        }
+
+        const response = await axios.get(
+          "http://192.168.100.7:3000/patient/account",
+          {
+            headers: {
+              Authorization: token,
+            },
+          }
+        );
+
+        setPatient(response.data.patient);
       } catch (error) {
         console.error(error);
       }
     };
 
-    retrieveToken();
-  }, []); // Run only once when the component mounts
+    fetchPatientInfo();
+  }, []);
+
+  if (!patient) {
+    return (
+      <View style={styles.container}>
+        <Text style={styles.loadingText}>Loading...</Text>
+      </View>
+    );
+  }
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Patient Information</Text>
-      {patient ? (
-        <View>
-          <Text>First Name: {patient.first_name}</Text>
-          <Text>Last Name: {patient.last_name}</Text>
-          <Text>Email: {patient.email}</Text>
-          <Text>Phone Number: {patient.phone_number}</Text>
-          <Text>Address: {patient.address}</Text>
-        </View>
-      ) : (
-        <Text>Loading patient information...</Text>
-      )}
+      <Text style={styles.heading}>Patient Account</Text>
+      <View style={styles.infoContainer}>
+        <Text style={styles.label}>First Name:</Text>
+        <Text style={styles.value}>{patient.first_name}</Text>
+      </View>
+      <View style={styles.infoContainer}>
+        <Text style={styles.label}>Last Name:</Text>
+        <Text style={styles.value}>{patient.last_name}</Text>
+      </View>
+      <View style={styles.infoContainer}>
+        <Text style={styles.label}>Email:</Text>
+        <Text style={styles.value}>{patient.email}</Text>
+      </View>
+      <View style={styles.infoContainer}>
+        <Text style={styles.label}>Phone Number:</Text>
+        <Text style={styles.value}>{patient.phone_number}</Text>
+      </View>
+      <View style={styles.infoContainer}>
+        <Text style={styles.label}>Address:</Text>
+        <Text style={styles.value}>{patient.address}</Text>
+      </View>
     </View>
   );
 };
@@ -67,14 +73,28 @@ const PatientInfoScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
+    padding: 16,
   },
-  title: {
-    fontSize: 20,
+  loadingText: {
+    fontSize: 18,
+    textAlign: "center",
+  },
+  heading: {
+    fontSize: 24,
     fontWeight: "bold",
-    marginBottom: 20,
+    marginBottom: 16,
+  },
+  infoContainer: {
+    flexDirection: "row",
+    marginBottom: 8,
+  },
+  label: {
+    flex: 1,
+    fontWeight: "bold",
+  },
+  value: {
+    flex: 2,
   },
 });
 
-export default PatientInfoScreen;
+export default PatientAccount;

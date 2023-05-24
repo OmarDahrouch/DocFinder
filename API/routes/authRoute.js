@@ -8,13 +8,17 @@ const {
   deletePatient,
   signinPatient,
   verifyToken,
+  getPatientAccount,
 } = require("../controllers/authController");
 
 // Route to post a new patient
 router.post("/patients/signup", createPatient);
 
 // Route to get all patients
-router.get("/patients", verifyToken, getPatients);
+router.get("/patients", getPatients);
+
+// Route to get a logged in patient
+router.get("/patient/account", getPatientAccount);
 
 // Route to update a patient
 router.put("/patients/:id", updatePatient);

@@ -3,6 +3,7 @@ import { View, StyleSheet, ScrollView, Alert } from "react-native";
 import CustomInput from "../components/CustomInput";
 import CustomButton from "../components/CustomButton";
 import axios from "axios";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useNavigation } from "@react-navigation/native";
 
 const SignInScreen = () => {
@@ -20,6 +21,9 @@ const SignInScreen = () => {
           password,
         }
       );
+
+      const token = response.data.token;
+      await AsyncStorage.setItem("token", token);
 
       console.log(response.data);
       setEmail("");
