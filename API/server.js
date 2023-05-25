@@ -1,9 +1,11 @@
 const express = require("express");
 const bodyParser = require("body-parser");
-const app = express();
 const PORT = 3000;
 const { mogoUrl } = require("./database");
 const mongoose = require("mongoose");
+const cors = require("cors");
+const app = express();
+app.use(cors());
 
 // Middleware pour l'api patients------------------------------------------
 

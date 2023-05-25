@@ -23,24 +23,63 @@ async function createPatient(req, res) {
     });
 
     await patient.save();
-    res.send("Success");
+
+    // Generate a token
+    const token = jwt.sign({ patientId: patient._id }, "secretkey");
+
+    res.json({ message: "Success", token });
   } catch (error) {
     console.error(error);
     res.status(500).send("Error");
   }
 }
 
-//-------get all Patients
+// Get a patient logged in
+async function getPatientAccount(req, res) {
+  try {
+    // Verify the token
+    const token = req.headers.authorization;
+    if (!token) {
+      return res.status(401).json({ message: "Unauthorized" });
+    }
 
-function getPatient(req, res) {
-  Patient.find()
-    .then((patients) => {
-      res.json(patients);
-    })
-    .catch((error) => {
-      console.error(error);
-      res.status(500).send("Error");
-    });
+    const decodedToken = jwt.verify(token, "secretkey");
+    const patientId = decodedToken.patientId;
+
+    // Retrieve the patient information
+    const patient = await Patient.findById(patientId);
+
+    if (!patient) {
+      return res.status(404).json({ message: "Patient not found" });
+    }
+
+    // Return the patient information
+    res.json({ patient });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Error");
+  }
+}
+
+// Get all patients or signed in patient
+
+function getPatients(req, res) {
+  // Check if the patient object is attached to the request
+  if (req.patient) {
+    // Return the information of the currently signed-in patient
+    const { patient } = req;
+    res.json({ patient });
+  } else {
+    // Continue with the existing logic to fetch all patients
+    Patient.find()
+      .then((patients) => {
+        res.json(patients);
+      })
+      .catch((error) => {
+        console.error(error);
+        res.status(500).send("Error");
+      });
+  }
 }
 
 //-------update a Patient
@@ -98,8 +137,7 @@ function deletePatient(req, res) {
     });
 }
 
-//----sign in a Patient
-
+// Sign in patient
 async function signinPatient(req, res) {
   const { email, password } = req.body;
 
@@ -118,17 +156,39 @@ async function signinPatient(req, res) {
       return res.status(401).json({ message: "Invalid credentials" });
     }
 
-    res.json({ message: "Success" });
+    // Generate a token
+    const token = jwt.sign({ patientId: patient._id }, "secretkey");
+
+    res.json({ token });
   } catch (error) {
     console.error(error);
     res.status(500).send("Error");
   }
 }
 
+function verifyToken(req, res, next) {
+  const token = req.headers.authorization;
+
+  if (!token) {
+    return res.status(401).json({ message: "Unauthorized" });
+  }
+
+  jwt.verify(token, "secretkey", (err, decoded) => {
+    if (err) {
+      return res.status(401).json({ message: "Invalid token" });
+    }
+
+    req.patientId = decoded.patientId;
+    next();
+  });
+}
+
 module.exports = {
   createPatient,
-  getPatient,
+  getPatients,
   updatePatient,
   deletePatient,
   signinPatient,
+  getPatientAccount,
+  verifyToken,
 };
