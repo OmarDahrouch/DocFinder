@@ -24,14 +24,12 @@ const DoctorDetailsScreen = ({ route, navigation }) => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Doctor Details</Text>
       <Text style={styles.label}>
         Dr. {doctor.first_name} {doctor.last_name}
       </Text>
 
       <Text style={styles.label}>{doctor.specialization}</Text>
       <Text style={styles.label}>{doctor.location}</Text>
-      {/* Add more details here if needed */}
     </View>
   );
 };
