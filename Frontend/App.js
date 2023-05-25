@@ -1,9 +1,10 @@
 import { StatusBar } from "expo-status-bar";
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
-// import Navigation from "./navigation";
+import Navigation from "./navigation";
 import SignInScreen from "./screens/SignInScreen";
 import SignUpScreen from "./screens/SignupScreen";
+import ForgotPasswordScreen from "./screens/ForgotPasswordScreen";
 import HomeScreen from "./screens/HomeScreen";
 import BarSearch from "./components/searchBar";
 import DoctorDetailsScreen from "./screens/DoctorDetailsScreen";
