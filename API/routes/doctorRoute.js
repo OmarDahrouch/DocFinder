@@ -4,6 +4,7 @@ const {
   createDoctor,
   getDoctors,
   getDoctorBy,
+  getaDoctor,
   updateDoctor,
   deleteDoctor,
   signinDoctor,
@@ -14,6 +15,9 @@ router.post("/doctor", createDoctor);
 
 // Route to get all patients
 router.get("/doctors", getDoctors);
+
+//Route to get a doctor by id
+router.get("/doctor/:id", getaDoctor);
 
 // Route to get  patient by name or ....
 router.get("/doctor", getDoctorBy);
