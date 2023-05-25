@@ -2,6 +2,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const Patient = mongoose.model("Patient");
 const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
 
 //---------create a new Patient
 
