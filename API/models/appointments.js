@@ -14,6 +14,7 @@ const appointmentSchema = new mongoose.Schema({
   appointment_date: { type: Date, required: true },
   appointment_time: { type: String, required: true },
   status: { type: String, required: true },
+  updated_at: { type: Date, default: Date.now },
 });
 
 module.exports = mongoose.model("Appointment", appointmentSchema);

@@ -7,6 +7,10 @@ const DoctorItem = ({ doctor, navigation }) => {
       onPress={() => {
         navigation.navigate("DoctorDetails", {
           Id: doctor._id,
+          first_name: doctor.first_name,
+          last_name: doctor.last_name,
+          specialization: doctor.specialization,
+          location: doctor.location,
         });
       }}
     >
