@@ -19,6 +19,8 @@ const HomeScreen = () => {
     }
   };
 
+  console.log(doctors);
+
   const renderDoctor = ({ item }) => {
     return <DoctorItem doctor={item} />;
   };

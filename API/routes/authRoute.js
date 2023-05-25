@@ -18,7 +18,7 @@ router.post("/patients/signup", createPatient);
 router.get("/patients", getPatients);
 
 // Route to get a logged in patient
-router.get("/patient/account", getPatientAccount);
+router.get("/patient/account", verifyToken, getPatientAccount);
 
 // Route to update a patient
 router.put("/patients/:id", updatePatient);

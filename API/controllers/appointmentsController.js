@@ -2,12 +2,12 @@ const express = require("express");
 const mongoose = require("mongoose");
 const Appointment = mongoose.model("Appointment");
 const bcrypt = require("bcrypt");
+const check = require("../services/appointmentService");
 
 //---------create a new appointment
 async function createAppointment(req, res) {
   try {
     const {
-      appointment_number,
       doctor_id,
       patient_id,
       appointment_date,
@@ -15,8 +15,11 @@ async function createAppointment(req, res) {
       status,
     } = req.body;
 
+    if (!check(doctor_id, appointment_date, appointment_time)) {
+      console.log("error");
+    }
+
     const newAppointment = new Appointment({
-      appointment_number,
       doctor_id,
       patient_id,
       appointment_date,

@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { TextInput, View, StyleSheet, FlatList } from "react-native";
+import { View, StyleSheet, FlatList } from "react-native";
 import DoctorItem from "../components/DoctorItem";
 import { SearchBar } from "react-native-elements";
 
-const BarSearch = () => {
+const BarSearch = ({ navigation }) => {
   const [searchQuery, setSearchQuery] = useState("");
   const [searchResults, setSearchResults] = useState([]);
   const [loading, setLoading] = useState("false");
@@ -13,9 +13,7 @@ const BarSearch = () => {
     setLoading("false");
     if (query.length > 2) {
       try {
-        const response = await fetch(
-          `http://192.168.2.102:3000/doctor?q=${query}`
-        );
+        const response = await fetch(`http://localhost:3000/doctor?q=${query}`);
         const data = await response.json();
         setSearchResults(data);
         console.log(data);
@@ -30,7 +28,7 @@ const BarSearch = () => {
   }, []);
 
   const renderDoctor = ({ item }) => {
-    return <DoctorItem doctor={item} />;
+    return <DoctorItem doctor={item} navigation={navigation} />;
   };
 
   return (
@@ -42,6 +40,7 @@ const BarSearch = () => {
         round
       />
       {/* Render the search results if they are defined */}
+
       <FlatList
         data={searchResults}
         renderItem={renderDoctor}

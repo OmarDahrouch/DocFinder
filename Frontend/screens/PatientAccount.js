@@ -73,16 +73,21 @@ const PatientAccount = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 16,
+    padding: 20,
+    backgroundColor: "#f9f9f9",
   },
   loadingText: {
     fontSize: 18,
     textAlign: "center",
+    marginTop: 20,
+    marginBottom: 20,
+    color: "#555",
   },
   heading: {
     fontSize: 24,
     fontWeight: "bold",
     marginBottom: 16,
+    color: "#333",
   },
   infoContainer: {
     flexDirection: "row",
@@ -91,9 +96,11 @@ const styles = StyleSheet.create({
   label: {
     flex: 1,
     fontWeight: "bold",
+    color: "#333",
   },
   value: {
     flex: 2,
+    color: "#555",
   },
 });
 
