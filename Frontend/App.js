@@ -8,6 +8,7 @@ import ForgotPasswordScreen from "./screens/ForgotPasswordScreen";
 import HomeScreen from "./screens/HomeScreen";
 import BarSearch from "./components/searchBar";
 import DoctorDetailsScreen from "./screens/DoctorDetailsScreen";
+import BookingScreen from "./screens/BookingScreen";
 
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
@@ -20,6 +21,7 @@ export default function App() {
       <Stack.Navigator>
         <Stack.Screen name="Home" component={BarSearch} />
         <Stack.Screen name="DoctorDetails" component={DoctorDetailsScreen} />
+        <Stack.Screen name="BookingScreen" component={BookingScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );
