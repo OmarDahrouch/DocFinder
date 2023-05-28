@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { View, StyleSheet, ScrollView, Alert } from "react-native";
+import Logo from "../components/Logo";
 import CustomInput from "../components/CustomInput";
 import CustomButton from "../components/CustomButton";
 import axios from "axios";
@@ -37,8 +38,15 @@ const SignInScreen = () => {
     }
   };
 
+  const onSignUpPressed = () => {
+    navigation.navigate("SignUp");
+  };
+
   return (
     <ScrollView contentContainerStyle={styles.container}>
+      <View style={styles.logoContainer}>
+        <Logo style={styles.logo} />
+      </View>
       <View style={styles.root}>
         <CustomInput
           name="email"
@@ -55,7 +63,22 @@ const SignInScreen = () => {
           onChangeText={setPassword}
         />
 
-        <CustomButton text="Sign In" onPress={onSignInPressed} />
+        <CustomButton
+          text="Sign In"
+          onPress={onSignInPressed}
+          type="PRIMARY"
+          bgColor="#00a79d"
+          fgColor="white"
+        />
+
+        <CustomButton
+          text="Sign Up"
+          onPress={onSignUpPressed}
+          type="OUTLINE"
+          bgColor="#00a79d"
+          fgColor="white"
+          style={styles.signUpButton}
+        />
       </View>
     </ScrollView>
   );
@@ -66,10 +89,21 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
+    marginBottom: 100,
+  },
+  logoContainer: {
+    marginBottom: -110,
+  },
+  logo: {
+    width: 500,
+    height: 400,
   },
   root: {
     width: "80%",
-    padding: 20,
+    padding: 10,
+  },
+  signUpButton: {
+    marginTop: 10,
   },
 });
 
