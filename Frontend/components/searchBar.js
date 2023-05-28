@@ -40,6 +40,8 @@ const BarSearch = ({ navigation }) => {
         onChangeText={handleSearch}
         value={searchQuery}
         round
+        containerStyle={styles.search}
+        inputContainerStyle={styles.input}
       />
       {/* Render the search results if they are defined */}
 
@@ -57,6 +59,13 @@ const styles = StyleSheet.create({
   container: {
     padding: 10,
     flex: 1,
+  },
+  search: {
+    height: 50,
+    borderRadius: 10,
+  },
+  input: {
+    height: 30,
   },
 });
 

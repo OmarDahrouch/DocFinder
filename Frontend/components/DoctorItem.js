@@ -36,7 +36,7 @@ const DoctorItem = ({ doctor, navigation }) => {
 const styles = StyleSheet.create({
   container: {
     backgroundColor: "#FFFFFF",
-    padding: 16,
+    padding: 10,
     borderRadius: 8,
     shadowColor: "#000000",
     shadowOffset: {
@@ -46,7 +46,8 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.2,
     shadowRadius: 2,
     elevation: 3,
-    marginTop: 4,
+    marginTop: 5,
+    height: 100,
   },
   profileContainer: {
     flexDirection: "row",
@@ -61,6 +62,7 @@ const styles = StyleSheet.create({
   },
   detailsContainer: {
     flex: 1,
+    marginLeft: 5,
   },
   name: {
     fontSize: 18,
