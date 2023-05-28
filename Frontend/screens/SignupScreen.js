@@ -9,9 +9,11 @@ import {
 } from "react-native";
 import CustomInput from "../components/CustomInput";
 import CustomButton from "../components/CustomButton";
+import { useNavigation } from "@react-navigation/native";
 import axios from "axios";
 
 const SignUpScreen = () => {
+  const navigation = useNavigation();
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
@@ -22,7 +24,7 @@ const SignUpScreen = () => {
   const onSignUpPressed = async () => {
     try {
       const response = await axios.post(
-        "http://192.168.100.216:3000/patients",
+        "http://192.168.100.7:3000/patients/signup",
         {
           first_name: firstName,
           last_name: lastName,
@@ -43,10 +45,15 @@ const SignUpScreen = () => {
       setAddress("");
 
       Alert.alert("Success", "Sign up successful");
+      navigation.navigate("SignIn");
     } catch (error) {
       console.log(error);
       Alert.alert("Error", "Failed to sign up. Please try again.");
     }
+  };
+
+  const onLogInPressed = () => {
+    navigation.navigate("SignIn");
   };
 
   return (
@@ -100,7 +107,7 @@ const SignUpScreen = () => {
         />
       </View>
       <View style={styles.footer}>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={onLogInPressed}>
           <Text style={styles.footerText}>Already have an account? Log In</Text>
         </TouchableOpacity>
       </View>
@@ -129,7 +136,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   signUpButton: {
-    backgroundColor: "#007AFF",
+    backgroundColor: "#00a79d",
     borderRadius: 8,
     paddingVertical: 14,
   },
