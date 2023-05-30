@@ -3,7 +3,7 @@ import { View, StyleSheet, FlatList } from "react-native";
 import DoctorItem from "../components/DoctorItem";
 import { SearchBar } from "react-native-elements";
 
-const BarSearch = ({ navigation }) => {
+const SearchScreen = ({ navigation }) => {
   const [searchQuery, setSearchQuery] = useState("");
   const [searchResults, setSearchResults] = useState([]);
   const [loading, setLoading] = useState("false");
@@ -13,7 +13,9 @@ const BarSearch = ({ navigation }) => {
     setLoading("false");
     if (query.length > 2) {
       try {
-        const response = await fetch(`http://localhost:3000/doctor?q=${query}`);
+        const response = await fetch(
+          `http://192.168.2.102:3000/doctor?q=${query}`
+        );
         const data = await response.json();
         setSearchResults(data);
         console.log(data);
@@ -38,6 +40,8 @@ const BarSearch = ({ navigation }) => {
         onChangeText={handleSearch}
         value={searchQuery}
         round
+        containerStyle={styles.search}
+        inputContainerStyle={styles.input}
       />
       {/* Render the search results if they are defined */}
 
@@ -56,6 +60,13 @@ const styles = StyleSheet.create({
     padding: 10,
     flex: 1,
   },
+  search: {
+    height: 50,
+    borderRadius: 10,
+  },
+  input: {
+    height: 30,
+  },
 });
 
-export default BarSearch;
+export default SearchScreen;
