@@ -4,8 +4,8 @@ import {
   View,
   Text,
   Image,
-  FlatList,
   TouchableOpacity,
+  Alert,
 } from "react-native";
 import { useRoute } from "@react-navigation/native";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
@@ -37,6 +37,7 @@ const BookingScreen = () => {
   };
 
   const [selectedDate, setSelectedDate] = useState(currentDate);
+  const [selectedTime, setSelectedTime] = useState(null);
   const [timeSlots, setTimeSlots] = useState([]);
 
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
@@ -51,25 +52,24 @@ const BookingScreen = () => {
   console.log(selectedDate);
 
   useEffect(() => {
-    fetchAvailableSlots(selectedDate);
+    fetchAvailableSlots(selectedDate, IdDoctorB);
   }, []);
 
   const handleConfirm = (date) => {
     setSelectedDate(date);
-    console.warn("A date has been picked: ", date);
-    fetchAvailableSlots(date.toISOString().split("T")[0]);
+    console.warn("A date has been picked: ", date.toISOString().split("T")[0]);
+    fetchAvailableSlots(date, IdDoctorB);
 
     hideDatePicker();
   };
-  // useEffect(() => {
-  //   fetchAvailableSlots(selectedDate);
-  // }, []);
 
-  const fetchAvailableSlots = async (selectedDate) => {
+  const fetchAvailableSlots = async (selectedDate, IdDoctorB) => {
     try {
       // Make API request to fetch available time slots for selectedDate
       const response = await axios.get(
-        `http://192.168.2.102:3000/appointment/date?day=${selectedDate}`
+        `http://192.168.2.102:3000/appointment/data?day=${
+          selectedDate.toISOString().split("T")[0]
+        }&idDoctor=${IdDoctorB}`
       );
       const data = response.data;
       setTimeSlots(data);
@@ -78,10 +78,44 @@ const BookingScreen = () => {
     }
   };
 
+  const bookAppoin = async () => {
+    try {
+      const response = await axios.post(
+        "http://192.168.2.102:3000/appointments",
+        {
+          doctor_id: IdDoctorB,
+          patient_id: "6466415f32496e2cc9854bb2",
+          appointment_date: selectedDate.toISOString().split("T")[0],
+          appointment_time: selectedTime,
+          status: "non-confirmer",
+        }
+      );
+      console.log(response.data);
+
+      Alert.alert("Success", "book appointment successful");
+    } catch (error) {
+      Alert.alert("Error", "Failed to book appointment. Please try again.");
+    }
+  };
+
+  const TimeAlert = () => Alert.alert("Error", "Please select a time slot");
+
   const renderTimeSlots = () => {
     return timeSlots.map((slot, index) => (
       <View key={index} style={styles.timeSlotCard}>
-        <Text style={styles.timeSlotText}>{slot}</Text>
+        <TouchableOpacity
+          activeOpacity={0.1}
+          onPress={() => {
+            setSelectedTime(slot);
+            console.log(slot);
+          }}
+          style={[
+            styles.timeSlotButton,
+            { backgroundColor: selectedTime === slot ? "#00a79d" : "#ECECEC" },
+          ]}
+        >
+          <Text style={styles.timeSlotText}>{slot}</Text>
+        </TouchableOpacity>
       </View>
     ));
   };
@@ -107,7 +141,7 @@ const BookingScreen = () => {
           <Button
             onPress={showDatePicker}
             type="clear"
-            icon={<Icon name="calendar" size={20} color="blue" />}
+            icon={<Icon name="calendar" size={20} color="#00a79d" />}
           />
           <Text style={styles.dayText}>
             {selectedDate ? formatDate(selectedDate) : formatDate(currentDate)}
@@ -121,12 +155,16 @@ const BookingScreen = () => {
           onCancel={hideDatePicker}
           minimumDate={new Date(formattedDate)}
         />
-
+        <Divider />
         <Text style={styles.Text}>Pick a time</Text>
         <View style={styles.containerTimeSlotes}>{renderTimeSlots()}</View>
       </View>
+      <Divider />
       <View style={styles.containerStyle}>
-        <Button title="Confirmer" />
+        <Button
+          title="Confirmer"
+          onPress={selectedTime === null ? TimeAlert : bookAppoin}
+        />
       </View>
     </View>
   );
@@ -189,6 +227,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     alignContent: "center",
+    marginBottom: 10,
   },
   dayText: {
     marginLeft: 10,

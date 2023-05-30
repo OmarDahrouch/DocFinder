@@ -3,7 +3,7 @@ import { View, StyleSheet, FlatList } from "react-native";
 import DoctorItem from "../components/DoctorItem";
 import { SearchBar } from "react-native-elements";
 
-const BarSearch = ({ navigation }) => {
+const SearchScreen = ({ navigation }) => {
   const [searchQuery, setSearchQuery] = useState("");
   const [searchResults, setSearchResults] = useState([]);
   const [loading, setLoading] = useState("false");
@@ -69,4 +69,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default BarSearch;
+export default SearchScreen;

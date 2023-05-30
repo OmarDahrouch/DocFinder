@@ -13,7 +13,7 @@ const appointmentSchema = new mongoose.Schema({
   },
   appointment_date: { type: Date, required: true },
   appointment_time: { type: String, required: true },
-  status: { type: String, required: true },
+  status: { type: String, required: true, default: "non-confirmer" },
 });
 
 module.exports = mongoose.model("Appointment", appointmentSchema);

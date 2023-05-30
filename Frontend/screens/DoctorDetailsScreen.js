@@ -9,6 +9,7 @@ const DoctorDetailsScreen = ({ route, navigation }) => {
   const lastName = route.params.last_name;
   const location = route.params.location;
   const specialization = route.params.specialization;
+
   return (
     <View style={styles.container}>
       <View style={styles.profile}>

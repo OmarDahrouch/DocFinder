@@ -88,10 +88,11 @@ async function deleteAppointment(req, res) {
 // available time
 
 async function getAvailableTimeSlots(req, res) {
+  const doctorId = req.query.idDoctor;
   const currentDay = req.query.day;
   console.log(currentDay);
   const timeSlots = await getTimeSlots(currentDay);
-  const reservedTimeSlots = await getExistingAppointments(currentDay);
+  const reservedTimeSlots = await getExistingAppointments(doctorId, currentDay);
 
   let availableTimeSlots = [];
   for (let slot of timeSlots) {

@@ -1,41 +1,39 @@
 import React, { useState, useEffect } from "react";
-import { View, StyleSheet, FlatList, Text } from "react-native";
-import axios from "axios";
-import DoctorItem from "../components/DoctorItem";
+import { View, StyleSheet, Text, ScrollView } from "react-native";
+import { Button } from "react-native-elements";
+import Icon from "react-native-vector-icons/FontAwesome";
 
-const HomeScreen = () => {
-  const [doctors, setDoctors] = useState([]);
-
-  useEffect(() => {
-    fetchDoctors();
-  }, []);
-
-  const fetchDoctors = async () => {
-    try {
-      const response = await axios.get("http://192.168.2.102:3000/doctors");
-      setDoctors(response.data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  console.log(doctors);
-
-  const renderDoctor = ({ item }) => {
-    return <DoctorItem doctor={item} />;
-  };
-
+const HomeScreen = ({ navigation }) => {
   return (
     <View style={styles.container}>
-      <Text style={styles.headerText}>Doctors</Text>
-      <View style={styles.listContainer}>
-        <FlatList
-          data={doctors}
-          renderItem={renderDoctor}
-          keyExtractor={(item) => item._id}
-          contentContainerStyle={styles.listContent}
+      <View style={styles.container1}>
+        <Text style={styles.title}>Trouvez un rendez-vous </Text>
+        <Text style={styles.title}>avec </Text>
+        <Text style={styles.title}>un médecin </Text>
+        <Button
+          onPress={() => {
+            navigation.navigate("Recherche");
+          }}
+          icon={<Icon name="search" size={16} color="#00a79d" />}
+          iconLeft
+          title="Rechercher"
+          buttonStyle={{
+            backgroundColor: "white",
+            borderRadius: 10,
+            paddingVertical: 10,
+            paddingHorizontal: 20,
+            width: 200,
+            marginTop: 20,
+          }}
+          titleStyle={{
+            color: "#00a79d",
+            fontWeight: "bold",
+            fontSize: 16,
+            marginLeft: 10,
+          }}
         />
       </View>
+      <View style={styles.container2}></View>
     </View>
   );
 };
@@ -43,33 +41,20 @@ const HomeScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+  },
+  container1: {
+    flex: 1,
+    backgroundColor: "#00a79d",
     alignItems: "center",
-    justifyContent: "center",
-    backgroundColor: "#f5f5f5",
+    alignContent: "center",
+    justifyContent: "flex-start",
+    padding: 30,
   },
-  headerText: {
-    fontSize: 24,
-    fontWeight: "bold",
-    marginTop: 20,
-    marginBottom: 40,
-  },
-  listContainer: {
-    width: "90%",
-    backgroundColor: "#ffffff",
-    borderRadius: 10,
-    padding: 20,
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-    elevation: 5,
-  },
-  listContent: {
-    flexGrow: 1,
+  container2: { flex: 3, backgroundColor: "white" },
+  title: {
+    fontSize: 28,
+    fontWeight: "600",
+    color: "white",
   },
 });
-
 export default HomeScreen;

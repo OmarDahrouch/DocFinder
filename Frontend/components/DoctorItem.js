@@ -47,7 +47,7 @@ const styles = StyleSheet.create({
     shadowRadius: 2,
     elevation: 3,
     marginTop: 5,
-    height: 100,
+    height: 85,
   },
   profileContainer: {
     flexDirection: "row",
@@ -55,8 +55,8 @@ const styles = StyleSheet.create({
     marginBottom: 16,
   },
   profileImage: {
-    width: 80,
-    height: 80,
+    width: 65,
+    height: 65,
     borderRadius: 40,
     marginRight: 16,
   },
@@ -65,17 +65,18 @@ const styles = StyleSheet.create({
     marginLeft: 5,
   },
   name: {
-    fontSize: 18,
+    fontSize: 16,
     fontWeight: "bold",
     marginBottom: 4,
   },
   specialization: {
-    fontSize: 16,
+    fontSize: 14,
     color: "#888888",
     marginBottom: 4,
+    fontWeight: "500",
   },
   location: {
-    fontSize: 14,
+    fontSize: 13,
     color: "#888888",
   },
 });

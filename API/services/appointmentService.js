@@ -36,13 +36,14 @@ function convertTo24HourFormat(time) {
   return `${formattedHours.toString().padStart(2, "0")}:${minutes}`;
 }
 
-async function getExistingAppointments(currentDay) {
+async function getExistingAppointments(idDoctor, currentDay) {
   try {
     const existingAppointments = await Appointment.find({
+      doctor_id: idDoctor,
       appointment_date: currentDay,
     });
 
-    const reservedTimeSlotsSet = new Set(); // Utiliser un Set pour éviter les doublons
+    const reservedTimeSlotsSet = new Set(); // Use a Set to avoid duplicates
 
     existingAppointments.forEach((appointment) => {
       reservedTimeSlotsSet.add(
@@ -50,7 +51,7 @@ async function getExistingAppointments(currentDay) {
       );
     });
 
-    const reservedTimeSlots = Array.from(reservedTimeSlotsSet); // Convertir le Set en tableau
+    const reservedTimeSlots = Array.from(reservedTimeSlotsSet); // Convert the Set to an array
     return reservedTimeSlots;
   } catch (error) {
     throw new Error("Failed to get existing appointments");
