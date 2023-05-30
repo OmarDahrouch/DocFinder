@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { View, Text, StyleSheet, ScrollView, Alert } from "react-native";
-import Logo from "../components/Logo";
-import CustomInput from "../components/CustomInput";
-import CustomButton from "../components/CustomButton";
+import Logo from "../../components/Logo";
+import CustomInput from "../../components/CustomInput";
+import CustomButton from "../../components/CustomButton";
 import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useNavigation } from "@react-navigation/native";

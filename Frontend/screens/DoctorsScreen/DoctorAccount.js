@@ -1,15 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { View, Text, StyleSheet, Alert } from "react-native";
-import CustomButton from "../components/CustomButton";
-import CustomInput from "../components/CustomInput";
+import CustomButton from "../../components/CustomButton";
+import CustomInput from "../../components/CustomInput";
 import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import Logo from "../components/Logo";
+import Logo from "../../components/Logo";
 
 const DoctorAccount = ({ navigation }) => {
   const [doctor, setDoctor] = useState(null);
   const [doctorFirstName, setDoctorFirstName] = useState("");
   const [doctorLastName, setDoctorLastName] = useState("");
+  const [doctorLocation, setLocation] = useState("");
   const [doctorEmail, setDoctorEmail] = useState("");
   const [doctorPhoneNumber, setDoctorPhoneNumber] = useState("");
   const [doctorSpecialization, setDoctorSpecialization] = useState("");
@@ -39,6 +40,7 @@ const DoctorAccount = ({ navigation }) => {
         setDoctor(fetchedDoctor);
         setDoctorFirstName(fetchedDoctor.first_name);
         setDoctorLastName(fetchedDoctor.last_name);
+        setLocation(fetchedDoctor.location);
         setDoctorEmail(fetchedDoctor.email);
         setDoctorPhoneNumber(fetchedDoctor.phone_number);
         setDoctorSpecialization(fetchedDoctor.specialization);
@@ -64,16 +66,18 @@ const DoctorAccount = ({ navigation }) => {
       const { _id } = doctor;
 
       const updatedDoctor = {
-        _id: _id, // Pass the valid ObjectId instead of 'id'
+        id: _id,
         first_name: doctorFirstName,
         last_name: doctorLastName,
-        email: doctorEmail,
+        location: doctorLocation,
         phone_number: doctorPhoneNumber,
+        email: doctorEmail,
         specialization: doctorSpecialization,
+        profile_picture: doctorProfilePicture,
       };
 
       const response = await axios.put(
-        `http://192.168.100.7:3000/doctors/${_id}`,
+        `http://192.168.100.7:3000/doctor/${_id}`,
         updatedDoctor,
         {
           headers: {
@@ -122,6 +126,10 @@ const DoctorAccount = ({ navigation }) => {
       <View style={styles.infoContainer}>
         <Text style={styles.label}>Last Name:</Text>
         <CustomInput value={doctorLastName} onChangeText={setDoctorLastName} />
+      </View>
+      <View style={styles.infoContainer}>
+        <Text style={styles.label}>Location:</Text>
+        <CustomInput value={doctorLocation} onChangeText={setLocation} />
       </View>
       <View style={styles.infoContainer}>
         <Text style={styles.label}>Email:</Text>
