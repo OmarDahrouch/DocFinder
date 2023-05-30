@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, StyleSheet, Alert } from "react-native";
+import { View, Text, StyleSheet, Alert, ScrollView } from "react-native";
 import CustomButton from "../components/CustomButton";
 import CustomInput from "../components/CustomInput/CustomInput";
 import axios from "axios";
@@ -108,54 +108,59 @@ const PatientAccount = ({ navigation }) => {
   }
 
   return (
-    <View style={styles.container}>
-      <Logo style={styles.logo} />
-      <View style={styles.infoContainer}>
-        <Text style={styles.label}>First Name:</Text>
-        <CustomInput
-          value={patientFirstName}
-          onChangeText={setPatientFirstName}
-        />
+    <ScrollView contentContainerStyle={styles.scrollContainer}>
+      <View style={styles.container}>
+        <Logo style={styles.logo} />
+        <Text style={styles.label}>First name</Text>
+        <View style={styles.infoContainer}>
+          <CustomInput
+            value={patientFirstName}
+            onChangeText={setPatientFirstName}
+          />
+        </View>
+        <Text style={styles.label}>Last name</Text>
+        <View style={styles.infoContainer}>
+          <CustomInput
+            value={patientLastName}
+            onChangeText={setPatientLastName}
+          />
+        </View>
+        <Text style={styles.label}>Email</Text>
+        <View style={styles.infoContainer}>
+          <CustomInput value={patientEmail} onChangeText={setPatientEmail} />
+        </View>
+        <Text style={styles.label}>Phone number</Text>
+        <View style={styles.infoContainer}>
+          <CustomInput
+            value={patientPhoneNumber}
+            onChangeText={setPatientPhoneNumber}
+          />
+        </View>
+        <Text style={styles.label}>Address</Text>
+        <View style={styles.infoContainer}>
+          <CustomInput
+            value={patientAddress}
+            onChangeText={setPatientAddress}
+          />
+        </View>
+        <View style={styles.buttonContainer}>
+          <CustomButton
+            onPress={handleUpdate}
+            text="Update"
+            type="PRIMARY"
+            bgColor="#00a79d"
+            fgColor="white"
+          />
+          <CustomButton
+            onPress={handleSignOut}
+            text="Sign Out"
+            type="PRIMARY"
+            bgColor="#FF7C6F"
+            fgColor="white"
+          />
+        </View>
       </View>
-      <View style={styles.infoContainer}>
-        <Text style={styles.label}>Last Name:</Text>
-        <CustomInput
-          value={patientLastName}
-          onChangeText={setPatientLastName}
-        />
-      </View>
-      <View style={styles.infoContainer}>
-        <Text style={styles.label}>Email:</Text>
-        <CustomInput value={patientEmail} onChangeText={setPatientEmail} />
-      </View>
-      <View style={styles.infoContainer}>
-        <Text style={styles.label}>Phone Number:</Text>
-        <CustomInput
-          value={patientPhoneNumber}
-          onChangeText={setPatientPhoneNumber}
-        />
-      </View>
-      <View style={styles.infoContainer}>
-        <Text style={styles.label}>Address:</Text>
-        <CustomInput value={patientAddress} onChangeText={setPatientAddress} />
-      </View>
-      <View style={styles.buttonContainer}>
-        <CustomButton
-          onPress={handleUpdate}
-          text="Update"
-          type="PRIMARY"
-          bgColor="green"
-          fgColor="white"
-        />
-        <CustomButton
-          onPress={handleSignOut}
-          text="Sign Out"
-          type="PRIMARY"
-          bgColor="red"
-          fgColor="white"
-        />
-      </View>
-    </View>
+    </ScrollView>
   );
 };
 
@@ -177,6 +182,7 @@ const styles = StyleSheet.create({
     width: 450,
     height: 300,
     marginBottom: -50,
+    marginTop: -80,
   },
   infoContainer: {
     flexDirection: "row",
@@ -185,13 +191,20 @@ const styles = StyleSheet.create({
   },
   label: {
     flex: 1,
+    fontSize: 17,
     fontWeight: "bold",
-    marginRight: 8,
+    marginRight: 4,
+    marginBottom: 20,
     color: "#333",
   },
   buttonContainer: {
-    marginTop: 1,
+    marginTop: 20,
     alignItems: "center",
+    width: "100%",
+  },
+  scrollContainer: {
+    flexGrow: 1,
+    paddingBottom: 20,
   },
 });
 

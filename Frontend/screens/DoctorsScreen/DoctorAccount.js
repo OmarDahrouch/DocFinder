@@ -31,7 +31,7 @@ const DoctorAccount = ({ navigation }) => {
         }
 
         const response = await axios.get(
-          "http://192.168.100.7:3000/doctor/account",
+          "http://172.20.10.2:3000/doctor/account",
           {
             headers: {
               Authorization: token,
@@ -126,53 +126,53 @@ const DoctorAccount = ({ navigation }) => {
     <ScrollView contentContainerStyle={styles.scrollContainer}>
       <View style={styles.container}>
         <Logo style={styles.logo} />
+        <Text style={styles.label}>First name</Text>
         <View style={styles.infoContainer}>
-          <Text style={styles.label}>First Name:</Text>
           <CustomInput
             value={doctorFirstName}
             onChangeText={setDoctorFirstName}
           />
         </View>
+        <Text style={styles.label}>Last name </Text>
         <View style={styles.infoContainer}>
-          <Text style={styles.label}>Last Name:</Text>
           <CustomInput
             value={doctorLastName}
             onChangeText={setDoctorLastName}
           />
         </View>
+        <Text style={styles.label}>Address</Text>
         <View style={styles.infoContainer}>
-          <Text style={styles.label}>Address:</Text>
           <CustomInput value={doctorAdress} onChangeText={setDoctorAdress} />
         </View>
+        <Text style={styles.label}>Email</Text>
         <View style={styles.infoContainer}>
-          <Text style={styles.label}>Email:</Text>
           <CustomInput value={doctorEmail} onChangeText={setDoctorEmail} />
         </View>
+        <Text style={styles.label}>City</Text>
         <View style={styles.infoContainer}>
-          <Text style={styles.label}>City:</Text>
           <CustomInput value={doctorCity} onChangeText={setDoctorCity} />
         </View>
+        <Text style={styles.label}>Zip code</Text>
         <View style={styles.infoContainer}>
-          <Text style={styles.label}>Zip code:</Text>
           <CustomInput value={doctorZip} onChangeText={setDoctorZip} />
         </View>
+        <Text style={styles.label}>Phone number</Text>
         <View style={styles.infoContainer}>
-          <Text style={styles.label}>Phone Number:</Text>
           <CustomInput
             value={doctorPhoneNumber}
             onChangeText={setDoctorPhoneNumber}
           />
         </View>
+        <Text style={styles.label}>Specialization</Text>
         <View style={styles.infoContainer}>
-          <Text style={styles.label}>Specialization:</Text>
           <CustomInput
             value={doctorSpecialization}
             onChangeText={setDoctorSpecialization}
             style={styles.input}
           />
         </View>
+        <Text style={styles.label}>Description</Text>
         <View style={styles.infoContainer}>
-          <Text style={styles.label}>Description:</Text>
           <CustomInput
             value={doctorDescription}
             onChangeText={setDoctorDescription}
@@ -183,14 +183,14 @@ const DoctorAccount = ({ navigation }) => {
             onPress={handleUpdate}
             text="Update"
             type="PRIMARY"
-            bgColor="green"
+            bgColor="#00a79d"
             fgColor="white"
           />
           <CustomButton
             onPress={handleSignOut}
             text="Sign Out"
             type="PRIMARY"
-            bgColor="red"
+            bgColor="#FF7C6F"
             fgColor="white"
           />
         </View>
@@ -226,14 +226,16 @@ const styles = StyleSheet.create({
   },
   label: {
     flex: 1,
+    fontSize: 17,
     fontWeight: "bold",
     marginRight: 4,
-    marginBottom: 40,
+    marginBottom: 20,
     color: "#333",
   },
   buttonContainer: {
     marginTop: 20,
     alignItems: "center",
+    width: "100%",
   },
   scrollContainer: {
     flexGrow: 1,
