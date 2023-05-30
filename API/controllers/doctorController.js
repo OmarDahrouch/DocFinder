@@ -136,61 +136,44 @@ async function getDoctorAccount(req, res) {
 }
 
 function updateDoctor(req, res) {
-  const doctorId = req.params.id;
+  const { id } = req.params;
+  const {
+    first_name,
+    last_name,
+    location,
+    phone_number,
+    email,
+    password,
+    specialization,
+    profile_picture,
+  } = req.body;
 
-  const token = req.headers.authorization;
-  if (!token) {
-    return res.status(401).json({ message: "Unauthorized" });
+  if (!id) {
+    return res.status(400).send("Missing ID parameter");
   }
 
-  jwt.verify(token, "secretkey", (err, decoded) => {
-    if (err) {
-      return res.status(401).json({ message: "Invalid token" });
-    }
+  const updatedDoctor = {
+    first_name,
+    last_name,
+    location,
+    phone_number,
+    email,
+    password,
+    specialization,
+    profile_picture,
+  };
 
-    const {
-      first_name,
-      last_name,
-      location,
-      phone_number,
-      email,
-      password,
-      specialization,
-      profile_picture,
-    } = req.body;
-
-    bcrypt.hash(password, 10, (err, hashedPassword) => {
-      if (err) {
-        console.error(err);
-        return res.status(500).send("Error");
+  Doctor.findByIdAndUpdate(id, updatedDoctor, { new: true })
+    .then((updatedDoctor) => {
+      if (!updatedDoctor) {
+        return res.status(404).send("Doctor not found");
       }
-
-      Doctor.findByIdAndUpdate(
-        doctorId,
-        {
-          first_name,
-          last_name,
-          location,
-          phone_number,
-          email,
-          password: hashedPassword,
-          specialization,
-          profile_picture,
-        },
-        { new: true }
-      )
-        .then((updatedDoctor) => {
-          if (!updatedDoctor) {
-            return res.status(404).send("Doctor not found");
-          }
-          res.json(updatedDoctor);
-        })
-        .catch((error) => {
-          console.error(error);
-          res.status(500).send("Error");
-        });
+      res.json(updatedDoctor);
+    })
+    .catch((error) => {
+      console.error(error);
+      res.status(500).send("Error");
     });
-  });
 }
 
 function deleteDoctor(req, res) {
