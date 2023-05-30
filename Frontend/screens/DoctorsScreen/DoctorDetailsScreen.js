@@ -10,7 +10,7 @@ const DoctorDetailsScreen = ({ route, navigation }) => {
       </Text>
 
       <Text style={styles.label}>{route.params.specialization}</Text>
-      <Text style={styles.label}>{route.params.location}</Text>
+      <Text style={styles.label}>{route.params.adress}</Text>
     </View>
   );
 };

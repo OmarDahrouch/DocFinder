@@ -39,7 +39,7 @@ const DoctorSignInScreen = () => {
   };
 
   const onSignUpPressed = () => {
-    navigation.navigate("SignUp");
+    navigation.navigate("DoctorSignUp");
   };
 
   return (

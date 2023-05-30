@@ -9,11 +9,14 @@ async function createDoctor(req, res) {
   const {
     first_name,
     last_name,
-    location,
+    adress,
     phone_number,
     email,
     password,
+    city,
+    zip,
     specialization,
+    description,
     profile_picture,
   } = req.body;
 
@@ -22,11 +25,14 @@ async function createDoctor(req, res) {
     const newDoctor = new Doctor({
       first_name,
       last_name,
-      location,
+      adress,
       phone_number,
       email,
       password: hashedPassword,
+      city,
+      zip,
       specialization,
+      description,
       profile_picture,
     });
 
@@ -97,7 +103,7 @@ async function getDoctorBy(req, res) {
       $or: [
         { first_name: { $regex: searchTerm, $options: "i" } },
         { last_name: { $regex: searchTerm, $options: "i" } },
-        { location: { $regex: searchTerm, $options: "i" } },
+        { adress: { $regex: searchTerm, $options: "i" } },
       ],
     });
 
@@ -140,11 +146,14 @@ function updateDoctor(req, res) {
   const {
     first_name,
     last_name,
-    location,
+    adress,
     phone_number,
     email,
     password,
+    city,
+    zip,
     specialization,
+    description,
     profile_picture,
   } = req.body;
 
@@ -155,11 +164,14 @@ function updateDoctor(req, res) {
   const updatedDoctor = {
     first_name,
     last_name,
-    location,
+    adress,
     phone_number,
     email,
     password,
+    city,
+    zip,
     specialization,
+    description,
     profile_picture,
   };
 
