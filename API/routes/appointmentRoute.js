@@ -6,6 +6,7 @@ const {
   getanAppointment,
   updateAppointment,
   deleteAppointment,
+  getAppointmentsByIdPas,
   getAvailableTimeSlots,
 } = require("../controllers/appointmentsController");
 
@@ -24,6 +25,10 @@ router.put("/appointments/:id", updateAppointment);
 //DELETE route to delete a specific appointment by ID
 router.delete("/appointments/:id", deleteAppointment);
 
+//Get appointments by id patient
+router.get("/appointments/patient", getAppointmentsByIdPas);
+
+// Get available time slots
 router.get("/appointment/data", getAvailableTimeSlots);
 
 module.exports = router;

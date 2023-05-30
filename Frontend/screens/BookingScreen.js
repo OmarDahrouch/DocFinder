@@ -164,6 +164,7 @@ const BookingScreen = () => {
         <Button
           title="Confirmer"
           onPress={selectedTime === null ? TimeAlert : bookAppoin}
+          containerStyle={styles.button1}
         />
       </View>
     </View>

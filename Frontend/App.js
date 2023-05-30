@@ -9,6 +9,7 @@ import HomeScreen from "./screens/HomeScreen";
 import BarSearch from "./screens/SearchScreen";
 import DoctorDetailsScreen from "./screens/DoctorDetailsScreen";
 import BookingScreen from "./screens/BookingScreen";
+import AppointmentsScreen from "./screens/AppointmentsScreen";
 
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
@@ -38,6 +39,7 @@ export default function App() {
         <Stack.Screen name="Recherche" component={BarSearch} />
         <Stack.Screen name="DoctorDetails" component={DoctorDetailsScreen} />
         <Stack.Screen name="BookingScreen" component={BookingScreen} />
+        <Stack.Screen name="Appointments" component={AppointmentsScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );

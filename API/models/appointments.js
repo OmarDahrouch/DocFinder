@@ -16,4 +16,9 @@ const appointmentSchema = new mongoose.Schema({
   status: { type: String, required: true, default: "non-confirmer" },
 });
 
+appointmentSchema.pre("find", function (next) {
+  this.populate("doctor_id");
+  next();
+});
+
 module.exports = mongoose.model("Appointment", appointmentSchema);
