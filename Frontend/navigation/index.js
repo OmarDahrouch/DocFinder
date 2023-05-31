@@ -7,7 +7,6 @@ import PatientAccount from "../screens/PatientAccount";
 import SingnupScreen from "../screens/SignupScreen";
 import DoctorAccount from "../screens/DoctorsScreen/DoctorAccount";
 import DoctorSignUpScreen from "../screens/DoctorsScreen/DoctorSignUpScreen";
-import BarSearch from "../components/searchBar";
 import HomeScreen from "../screens/HomeScreen";
 
 const Stack = createNativeStackNavigator();

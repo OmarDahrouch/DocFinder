@@ -6,7 +6,7 @@ const DoctorItem = ({ doctor, navigation }) => {
     <TouchableOpacity
       onPress={() => {
         navigation.navigate("DoctorDetails", {
-          Id: doctor._id,
+          IdDoctor: doctor._id,
           first_name: doctor.first_name,
           last_name: doctor.last_name,
           specialization: doctor.specialization,
@@ -36,7 +36,7 @@ const DoctorItem = ({ doctor, navigation }) => {
 const styles = StyleSheet.create({
   container: {
     backgroundColor: "#FFFFFF",
-    padding: 16,
+    padding: 10,
     borderRadius: 8,
     shadowColor: "#000000",
     shadowOffset: {
@@ -46,7 +46,8 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.2,
     shadowRadius: 2,
     elevation: 3,
-    marginTop: 4,
+    marginTop: 5,
+    height: 85,
   },
   profileContainer: {
     flexDirection: "row",
@@ -54,26 +55,28 @@ const styles = StyleSheet.create({
     marginBottom: 16,
   },
   profileImage: {
-    width: 80,
-    height: 80,
+    width: 65,
+    height: 65,
     borderRadius: 40,
     marginRight: 16,
   },
   detailsContainer: {
     flex: 1,
+    marginLeft: 5,
   },
   name: {
-    fontSize: 18,
+    fontSize: 16,
     fontWeight: "bold",
     marginBottom: 4,
   },
   specialization: {
-    fontSize: 16,
+    fontSize: 14,
     color: "#888888",
     marginBottom: 4,
+    fontWeight: "500",
   },
   location: {
-    fontSize: 14,
+    fontSize: 13,
     color: "#888888",
   },
 });

@@ -1,24 +1,17 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const Appointment = mongoose.model("Appointment");
-const bcrypt = require("bcrypt");
-const check = require("../services/appointmentService");
+const {
+  getTimeSlots,
+  checkAppointmentAvailability,
+  getExistingAppointments,
+} = require("../services/appointmentService");
 
 //---------create a new appointment
-async function createAppointment(req, res) {
+async function bookAppointment(req, res) {
+  const { doctor_id, patient_id, appointment_date, appointment_time, status } =
+    req.body;
   try {
-    const {
-      doctor_id,
-      patient_id,
-      appointment_date,
-      appointment_time,
-      status,
-    } = req.body;
-
-    if (!check(doctor_id, appointment_date, appointment_time)) {
-      console.log("error");
-    }
-
     const newAppointment = new Appointment({
       doctor_id,
       patient_id,
@@ -26,10 +19,11 @@ async function createAppointment(req, res) {
       appointment_time,
       status,
     });
+
     const savedAppointment = await newAppointment.save();
-    res.status(201).json(savedAppointment);
+    return res.status(200).json(savedAppointment);
   } catch (error) {
-    res.status(500).json({ error: "Failed to create appointment" });
+    return res.status(500).json({ error: "Failed to create appointment" });
   }
 }
 
@@ -91,10 +85,31 @@ async function deleteAppointment(req, res) {
   }
 }
 
+// available time
+
+async function getAvailableTimeSlots(req, res) {
+  const doctorId = req.query.idDoctor;
+  const currentDay = req.query.day;
+  console.log(currentDay);
+  const timeSlots = await getTimeSlots(currentDay);
+  const reservedTimeSlots = await getExistingAppointments(doctorId, currentDay);
+
+  let availableTimeSlots = [];
+  for (let slot of timeSlots) {
+    if (!reservedTimeSlots.includes(slot)) {
+      availableTimeSlots.push(slot);
+    }
+  }
+  res.json(availableTimeSlots);
+  console.log(reservedTimeSlots);
+  console.log(availableTimeSlots);
+}
+
 module.exports = {
-  createAppointment,
+  bookAppointment,
   getAppointments,
   getanAppointment,
   updateAppointment,
   deleteAppointment,
+  getAvailableTimeSlots,
 };
