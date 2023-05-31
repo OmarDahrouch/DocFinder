@@ -7,8 +7,8 @@ import {
   TouchableOpacity,
   Alert,
 } from "react-native";
-import CustomInput from "../components/CustomInput";
-import CustomButton from "../components/CustomButton";
+import CustomInput from "../../components/CustomInput";
+import CustomButton from "../../components/CustomButton";
 import { useNavigation } from "@react-navigation/native";
 import axios from "axios";
 
@@ -16,22 +16,32 @@ const SignUpScreen = () => {
   const navigation = useNavigation();
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
+  const [adress, setAdress] = useState("");
+  const [phone_number, setPhone_Number] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [phoneNumber, setPhoneNumber] = useState("");
-  const [address, setAddress] = useState("");
+  const [city, setCity] = useState("");
+  const [zip, setZip] = useState("");
+  const [specialization, setSpecialization] = useState("");
+  const [description, setDescription] = useState("");
+  const [profile_picture, setProfile_Picture] = useState("");
 
   const onSignUpPressed = async () => {
     try {
       const response = await axios.post(
-        "http://192.168.2.102:3000/patients/signup",
+        "http://192.168.2.102:3000/doctor/signup",
         {
           first_name: firstName,
           last_name: lastName,
+          adress,
+          phone_number,
           email,
           password,
-          phone_number: phoneNumber,
-          address,
+          city,
+          zip,
+          specialization,
+          description,
+          profile_picture,
         }
       );
 
@@ -39,13 +49,17 @@ const SignUpScreen = () => {
 
       setFirstName("");
       setLastName("");
+      setAdress("");
       setEmail("");
-      setPassword("");
-      setPhoneNumber("");
-      setAddress("");
+      setCity("");
+      setZip("");
+      setPhone_Number("");
+      setSpecialization("");
+      setDescription("");
+      setProfile_Picture("");
 
       Alert.alert("Success", "Sign up successful");
-      navigation.navigate("SignIn");
+      navigation.navigate("DoctorSignIn");
     } catch (error) {
       console.log(error);
       Alert.alert("Error", "Failed to sign up. Please try again.");
@@ -53,7 +67,7 @@ const SignUpScreen = () => {
   };
 
   const onLogInPressed = () => {
-    navigation.navigate("SignIn");
+    navigation.navigate("DoctorSignIn");
   };
 
   return (
@@ -75,6 +89,18 @@ const SignUpScreen = () => {
           onChangeText={setLastName}
         />
         <CustomInput
+          name="address"
+          placeholder="Address"
+          value={adress}
+          onChangeText={setAdress}
+        />
+        <CustomInput
+          name="phoneNumber"
+          placeholder="Phone Number"
+          value={phone_number}
+          onChangeText={setPhone_Number}
+        />
+        <CustomInput
           name="email"
           placeholder="Email"
           value={email}
@@ -88,16 +114,28 @@ const SignUpScreen = () => {
           onChangeText={setPassword}
         />
         <CustomInput
-          name="phoneNumber"
-          placeholder="Phone Number"
-          value={phoneNumber}
-          onChangeText={setPhoneNumber}
+          name="city"
+          placeholder="City"
+          value={city}
+          onChangeText={setCity}
         />
         <CustomInput
-          name="address"
-          placeholder="Address"
-          value={address}
-          onChangeText={setAddress}
+          name="zip"
+          placeholder="Zip"
+          value={zip}
+          onChangeText={setZip}
+        />
+        <CustomInput
+          name="specialization"
+          placeholder="Specialization"
+          value={specialization}
+          onChangeText={setSpecialization}
+        />
+        <CustomInput
+          name="description"
+          placeholder="Description"
+          value={description}
+          onChangeText={setDescription}
         />
         <CustomButton
           text="Sign Up"
@@ -121,7 +159,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#F5F5F5",
     justifyContent: "center",
     paddingHorizontal: 20,
-    paddingTop: 40,
+    paddingTop: -20,
   },
   header: {
     alignItems: "center",

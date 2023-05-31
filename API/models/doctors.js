@@ -4,7 +4,7 @@ const validator = require("validator");
 const doctorSchema = new mongoose.Schema({
   first_name: { type: String, required: true },
   last_name: { type: String, required: true },
-  location: { type: String, required: true },
+  adress: { type: String, required: true },
   phone_number: { type: String, required: true },
   email: {
     type: String,
@@ -15,8 +15,11 @@ const doctorSchema = new mongoose.Schema({
     },
   },
   password: { type: String, required: true },
+  city: { type: String, required: true },
+  zip: { type: String, required: true },
   specialization: { type: String, required: true },
-  profile_picture: { type: String, required: true },
+  description: { type: String, required: true },
+  profile_picture: { type: String, required: false },
   created_at: { type: Date, default: Date.now },
   updated_at: { type: Date, default: Date.now },
 });

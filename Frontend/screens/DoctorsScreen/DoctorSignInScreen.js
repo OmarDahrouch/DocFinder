@@ -1,13 +1,13 @@
 import React, { useState } from "react";
-import { View, StyleSheet, ScrollView, Alert } from "react-native";
-import Logo from "../components/Logo";
-import CustomInput from "../components/CustomInput";
-import CustomButton from "../components/CustomButton";
+import { View, Text, StyleSheet, ScrollView, Alert } from "react-native";
+import Logo from "../../components/Logo";
+import CustomInput from "../../components/CustomInput";
+import CustomButton from "../../components/CustomButton";
 import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useNavigation } from "@react-navigation/native";
 
-const SignInScreen = () => {
+const DoctorSignInScreen = () => {
   const navigation = useNavigation();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -16,7 +16,7 @@ const SignInScreen = () => {
   const onSignInPressed = async () => {
     try {
       const response = await axios.post(
-        "http://192.168.2.102:3000/patients/signin",
+        "http://192.168.2.102:3000/doctor/signin",
         {
           email,
           password,
@@ -31,7 +31,7 @@ const SignInScreen = () => {
       setPassword("");
       setSuccessMessage("Sign in successful");
       Alert.alert("Success", "Logged In Successfully !!");
-      navigation.navigate("PatientAccount");
+      navigation.navigate("DoctorAccount");
     } catch (error) {
       console.log(error);
       Alert.alert("Error", "Failed to sign in. Please try again.");
@@ -39,7 +39,7 @@ const SignInScreen = () => {
   };
 
   const onSignUpPressed = () => {
-    navigation.navigate("SignUp");
+    navigation.navigate("DoctorSignUp");
   };
 
   return (
@@ -50,7 +50,7 @@ const SignInScreen = () => {
       <View style={styles.root}>
         <CustomInput
           name="email"
-          placeholder="Enter your email"
+          placeholder="Enter your doctor email"
           value={email}
           onChangeText={setEmail}
         />
@@ -107,4 +107,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default SignInScreen;
+export default DoctorSignInScreen;
