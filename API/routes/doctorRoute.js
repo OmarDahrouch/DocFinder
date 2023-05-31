@@ -8,16 +8,21 @@ const {
   updateDoctor,
   deleteDoctor,
   signinDoctor,
+  getDoctorAccount,
+  verifyToken,
 } = require("../controllers/doctorController");
 
 // Route to create a new doctor
-router.post("/doctor", createDoctor);
+router.post("/doctor/signup", createDoctor);
 
 // Route to get all patients
 router.get("/doctors", getDoctors);
 
-//Route to get a doctor by id
-router.get("/doctor/:id", getaDoctor);
+// //Route to get a doctor by id
+// router.get("/doctor/:id", getaDoctor);
+
+//Route to get a doctor account
+router.get("/doctor/account", verifyToken, getDoctorAccount);
 
 // Route to get  patient by name or ....
 router.get("/doctor", getDoctorBy);

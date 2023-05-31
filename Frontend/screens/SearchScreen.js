@@ -14,7 +14,7 @@ const SearchScreen = ({ navigation }) => {
     if (query.length > 2) {
       try {
         const response = await fetch(
-          `http://192.168.2.102:3000/doctor?q=${query}`
+          `http://192.168.100.7:3000/doctor?q=${query}`
         );
         const data = await response.json();
         setSearchResults(data);

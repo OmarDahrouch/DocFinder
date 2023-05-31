@@ -14,7 +14,7 @@ const DoctorDetailsScreen = ({ route, navigation }) => {
     <View style={styles.container}>
       <View style={styles.profile}>
         <Image
-          source={require("../assets/images/images.png")}
+          source={require("../../assets/images/images.png")}
           style={styles.profileImage}
         />
         <Text style={styles.name}>

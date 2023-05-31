@@ -87,37 +87,31 @@ function getPatients(req, res) {
 
 function updatePatient(req, res) {
   const { id } = req.params;
-  const { first_name, last_name, email, password, phone_number, address } =
-    req.body;
+  const { first_name, last_name, email, phone_number, address } = req.body;
 
-  // Hash the password
-  bcrypt.hash(password, 10, (err, hashedPassword) => {
-    if (err) {
-      console.error(err);
-      return res.status(500).send("Error");
-    }
+  if (!id) {
+    return res.status(400).send("Missing ID parameter");
+  }
 
-    const updatedPatient = {
-      first_name,
-      last_name,
-      email,
-      password: hashedPassword,
-      phone_number,
-      address,
-    };
+  const updatedPatient = {
+    first_name,
+    last_name,
+    email,
+    phone_number,
+    address,
+  };
 
-    Patient.findByIdAndUpdate(id, updatedPatient, { new: true })
-      .then((updatedPatient) => {
-        if (!updatedPatient) {
-          return res.status(404).send("Patient not found");
-        }
-        res.json(updatedPatient);
-      })
-      .catch((error) => {
-        console.error(error);
-        res.status(500).send("Error");
-      });
-  });
+  Patient.findByIdAndUpdate(id, updatedPatient, { new: true })
+    .then((updatedPatient) => {
+      if (!updatedPatient) {
+        return res.status(404).send("Patient not found");
+      }
+      res.json(updatedPatient);
+    })
+    .catch((error) => {
+      console.error(error);
+      res.status(500).send("Error");
+    });
 }
 
 //----delete a Patient
