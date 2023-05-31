@@ -85,6 +85,17 @@ async function deleteAppointment(req, res) {
   }
 }
 
+async function getAppointmentsByIdPas(req, res) {
+  const patientId = req.query.idPatient;
+  console.log(patientId);
+  try {
+    const appointments = await Appointment.find({ patient_id: patientId });
+    res.json(appointments);
+  } catch (error) {
+    res.status(500).json({ error: "Failed to fetch appointments" });
+  }
+}
+
 // available time
 
 async function getAvailableTimeSlots(req, res) {
@@ -111,5 +122,6 @@ module.exports = {
   getanAppointment,
   updateAppointment,
   deleteAppointment,
+  getAppointmentsByIdPas,
   getAvailableTimeSlots,
 };

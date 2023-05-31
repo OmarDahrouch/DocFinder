@@ -24,7 +24,7 @@ const SignUpScreen = () => {
   const onSignUpPressed = async () => {
     try {
       const response = await axios.post(
-        "http://192.168.100.7:3000/patients/signup",
+        "http://192.168.2.102:3000/patients/signup",
         {
           first_name: firstName,
           last_name: lastName,

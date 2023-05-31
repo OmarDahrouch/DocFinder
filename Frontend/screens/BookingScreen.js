@@ -20,7 +20,7 @@ const BookingScreen = () => {
   const IdDoctorB = route.params?.iddoctor;
   const firstname = route.params?.firstName;
   const lastname = route.params?.lastName;
-  const location = route.params?.location;
+  const adress = route.params?.adress;
   const specialization = route.params?.specialization;
 
   const currentDate = new Date();
@@ -67,7 +67,7 @@ const BookingScreen = () => {
     try {
       // Make API request to fetch available time slots for selectedDate
       const response = await axios.get(
-        `http://192.168.100.7:3000/appointment/data?day=${
+        `http://192.168.2.102:3000/appointment/data?day=${
           selectedDate.toISOString().split("T")[0]
         }&idDoctor=${IdDoctorB}`
       );
@@ -131,7 +131,7 @@ const BookingScreen = () => {
             Dr.{firstname} {lastname}
           </Text>
           <Text>{specialization}</Text>
-          <Text>{location}</Text>
+          <Text>{adress}</Text>
         </View>
       </View>
       <Divider />
@@ -164,6 +164,7 @@ const BookingScreen = () => {
         <Button
           title="Confirmer"
           onPress={selectedTime === null ? TimeAlert : bookAppoin}
+          buttonStyle={{ backgroundColor: "#00a79d", borderRadius: 20 }}
         />
       </View>
     </View>
@@ -206,6 +207,7 @@ const styles = StyleSheet.create({
     marginBottom: 16,
     marginTop: 12,
     marginLeft: 10,
+    padding: 10,
   },
   profileImage: {
     width: 80,
@@ -235,7 +237,7 @@ const styles = StyleSheet.create({
     fontWeight: "500",
   },
   dayTime: {
-    marginTop: 10,
+    paddingVertical: 10,
   },
   containerStyle: {
     alignSelf: "center",
