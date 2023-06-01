@@ -38,7 +38,7 @@ const SignInScreen = () => {
       setPassword("");
       setSuccessMessage("Sign in successful");
       Alert.alert("Success", "Logged In Successfully !!");
-      navigation.navigate("PatientAccount");
+      navigation.navigate("Recherche");
     } catch (error) {
       console.log(error);
       Alert.alert("Error", "Failed to sign in. Please try again.");

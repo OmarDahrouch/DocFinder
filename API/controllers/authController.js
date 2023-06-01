@@ -62,6 +62,24 @@ async function getPatientAccount(req, res) {
   }
 }
 
+async function getCurrentPatientID(req, res) {
+  try {
+    // Verify the token
+    const token = req.headers.authorization;
+    if (!token) {
+      return res.status(401).json({ message: "Unauthorized" });
+    }
+
+    const decodedToken = jwt.verify(token, "secretkey");
+    const patientId = decodedToken.patientId;
+
+    return patientId;
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Error");
+  }
+}
+
 // Get all patients or signed in patient
 
 function getPatients(req, res) {
@@ -161,23 +179,6 @@ async function signinPatient(req, res) {
   }
 }
 
-function verifyToken(req, res, next) {
-  const token = req.headers.authorization;
-
-  if (!token) {
-    return res.status(401).json({ message: "Unauthorized" });
-  }
-
-  jwt.verify(token, "secretkey", (err, decoded) => {
-    if (err) {
-      return res.status(401).json({ message: "Invalid token" });
-    }
-
-    req.patientId = decoded.patientId;
-    next();
-  });
-}
-
 module.exports = {
   createPatient,
   getPatients,
@@ -185,5 +186,5 @@ module.exports = {
   deletePatient,
   signinPatient,
   getPatientAccount,
-  verifyToken,
+  getCurrentPatientID,
 };

@@ -9,8 +9,6 @@ import {
 } from "react-native";
 import { useRoute } from "@react-navigation/native";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import Crypto from "react-native-crypto";
 import axios from "axios";
 import { Divider } from "@react-native-material/core";
 import { Button } from "react-native-elements";
@@ -22,7 +20,7 @@ const BookingScreen = () => {
   const IdDoctorB = route.params?.iddoctor;
   const firstname = route.params?.firstName;
   const lastname = route.params?.lastName;
-  const location = route.params?.location;
+  const adress = route.params?.adress;
   const specialization = route.params?.specialization;
 
   const currentDate = new Date();
@@ -41,6 +39,7 @@ const BookingScreen = () => {
   const [selectedDate, setSelectedDate] = useState(currentDate);
   const [selectedTime, setSelectedTime] = useState(null);
   const [timeSlots, setTimeSlots] = useState([]);
+  const [patientId, setPatientId] = useState(""); // Added state for patientId
 
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
 
@@ -54,8 +53,19 @@ const BookingScreen = () => {
   console.log(selectedDate);
 
   useEffect(() => {
+    fetchPatientId(); // Fetch the patientId on component mount
     fetchAvailableSlots(selectedDate, IdDoctorB);
   }, []);
+
+  const fetchPatientId = async () => {
+    try {
+      const response = await axios.get("http://192.168.100.7:3000/patient/ID");
+      const { patientId } = response.data;
+      setPatientId(patientId);
+    } catch (error) {
+      console.error("Failed to fetch patient ID:", error);
+    }
+  };
 
   const handleConfirm = (date) => {
     setSelectedDate(date);
@@ -79,40 +89,22 @@ const BookingScreen = () => {
       console.error("Failed to fetch available slots:", error);
     }
   };
-  const getLoggedInPatient = async () => {
-    try {
-      const token = await AsyncStorage.getItem("token");
-      const decodedToken = Crypto.jwt.decode(token);
-      const patientId = decodedToken.patientId;
-      return patientId;
-    } catch (error) {
-      console.error("Failed to get logged-in patient:", error);
-      return null;
-    }
-  };
 
   const bookAppoin = async () => {
     try {
-      const patientId = await getLoggedInPatient();
-      if (patientId) {
-        const response = await axios.post(
-          "http://192.168.100.7:3000/appointments",
-          {
-            doctor_id: IdDoctorB,
-            patient_id: patientId,
-            appointment_date: selectedDate.toISOString().split("T")[0],
-            appointment_time: selectedTime,
-            status: "non-confirmer",
-          }
-        );
-        console.log(response.data);
-        Alert.alert("Success", "Booked appointment successfully");
-      } else {
-        Alert.alert(
-          "Error",
-          "Failed to get logged-in patient. Please try again."
-        );
-      }
+      const response = await axios.post(
+        "http://192.168.100.7:3000/appointments",
+        {
+          doctor_id: IdDoctorB,
+          patient_id: patientId, // Use the fetched patientId
+          appointment_date: selectedDate.toISOString().split("T")[0],
+          appointment_time: selectedTime,
+          status: "non-confirmer",
+        }
+      );
+      console.log(response.data);
+
+      Alert.alert("Success", "book appointment successful");
     } catch (error) {
       Alert.alert("Error", "Failed to book appointment. Please try again.");
     }
@@ -151,7 +143,7 @@ const BookingScreen = () => {
             Dr.{firstname} {lastname}
           </Text>
           <Text>{specialization}</Text>
-          <Text>{location}</Text>
+          <Text>{adress}</Text>
         </View>
       </View>
       <Divider />
@@ -184,6 +176,7 @@ const BookingScreen = () => {
         <Button
           title="Confirmer"
           onPress={selectedTime === null ? TimeAlert : bookAppoin}
+          buttonStyle={{ backgroundColor: "#00a79d", borderRadius: 20 }}
         />
       </View>
     </View>
@@ -226,6 +219,7 @@ const styles = StyleSheet.create({
     marginBottom: 16,
     marginTop: 12,
     marginLeft: 10,
+    padding: 10,
   },
   profileImage: {
     width: 80,
@@ -255,7 +249,7 @@ const styles = StyleSheet.create({
     fontWeight: "500",
   },
   dayTime: {
-    marginTop: 10,
+    paddingVertical: 10,
   },
   containerStyle: {
     alignSelf: "center",
