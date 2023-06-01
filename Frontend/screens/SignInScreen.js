@@ -1,6 +1,13 @@
 import React, { useState } from "react";
-import { View, StyleSheet, ScrollView, Alert } from "react-native";
-import Logo from "../components/Logo";
+import {
+  View,
+  StyleSheet,
+  ScrollView,
+  Text,
+  Alert,
+  Image,
+  TouchableOpacity,
+} from "react-native";
 import CustomInput from "../components/CustomInput";
 import CustomButton from "../components/CustomButton";
 import axios from "axios";
@@ -45,7 +52,11 @@ const SignInScreen = () => {
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <View style={styles.logoContainer}>
-        <Logo style={styles.logo} />
+        <Image
+          source={require("../assets/images/Logo.png")}
+          style={styles.logo}
+          resizeMode="contain"
+        />
       </View>
       <View style={styles.root}>
         <CustomInput
@@ -62,23 +73,18 @@ const SignInScreen = () => {
           value={password}
           onChangeText={setPassword}
         />
-
-        <CustomButton
-          text="Sign In"
-          onPress={onSignInPressed}
-          type="PRIMARY"
-          bgColor="#00a79d"
-          fgColor="white"
-        />
-
-        <CustomButton
-          text="Sign Up"
-          onPress={onSignUpPressed}
-          type="OUTLINE"
-          bgColor="#00a79d"
-          fgColor="white"
-          style={styles.signUpButton}
-        />
+        <View style={styles.button}>
+          <CustomButton
+            text="Sign In"
+            onPress={onSignInPressed}
+            type="PRIMARY"
+            bgColor="#00a79d"
+            fgColor="white"
+          />
+        </View>
+        <TouchableOpacity onPress={onSignUpPressed}>
+          <Text style={styles.footerText}>Don't have an account ? Sign Up</Text>
+        </TouchableOpacity>
       </View>
     </ScrollView>
   );
@@ -87,9 +93,10 @@ const SignInScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: "#EFEFEF",
     justifyContent: "center",
     alignItems: "center",
-    marginBottom: 100,
+    marginBottom: "40%",
   },
   logoContainer: {
     marginBottom: -110,
@@ -97,13 +104,20 @@ const styles = StyleSheet.create({
   logo: {
     width: 500,
     height: 400,
+    margin: 40,
   },
   root: {
     width: "80%",
     padding: 10,
   },
-  signUpButton: {
-    marginTop: 10,
+  button: {
+    width: "100%",
+    marginTop: 20,
+  },
+  footerText: {
+    margin: 20,
+    color: "gray",
+    fontSize: 16,
   },
 });
 
