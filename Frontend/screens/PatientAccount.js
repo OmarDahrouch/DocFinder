@@ -26,7 +26,7 @@ const PatientAccount = ({ navigation }) => {
         }
 
         const response = await axios.get(
-          "http://192.168.2.102:3000/patient/account",
+          "http://192.168.100.7:3000/patient/account",
           {
             headers: {
               Authorization: token,

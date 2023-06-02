@@ -14,7 +14,7 @@ const SearchScreen = ({ navigation }) => {
     if (query.length > 2) {
       try {
         const response = await fetch(
-          `http://192.168.2.102:3000/doctor?q=${query}`
+          `http://192.168.100.7:3000/doctor?q=${query}`
         );
         const data = await response.json();
         setSearchResults(data);
@@ -61,11 +61,17 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   search: {
-    height: 50,
+    flexDirection: "row",
+    alignItems: "center",
+    backgroundColor: "#f2f2f2",
     borderRadius: 10,
+    paddingHorizontal: 10,
+    paddingVertical: 5,
+    marginHorizontal: 20,
+    marginVertical: 10,
   },
   input: {
-    height: 30,
+    height: 35,
   },
 });
 

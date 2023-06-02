@@ -17,7 +17,7 @@ const AppointmentsScreen = () => {
   const fetchAppointments = async () => {
     try {
       const response = await axios.get(
-        `http://192.168.2.102:3000/appointments/patient?idPatient=${idPatient}`
+        `http://192.168.100.7:3000/appointments/patient?idPatient=${idPatient}`
       );
       const data = response.data;
       setFetchResults(data);
