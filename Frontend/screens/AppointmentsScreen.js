@@ -1,12 +1,5 @@
 import React, { useEffect, useState } from "react";
-import {
-  StyleSheet,
-  View,
-  Text,
-  Image,
-  TouchableOpacity,
-  FlatList,
-} from "react-native";
+import { View, FlatList } from "react-native";
 import AppointmentsItem from "../components/AppointmentsItem";
 import axios from "axios";
 
@@ -17,7 +10,7 @@ const AppointmentsScreen = () => {
   const fetchAppointments = async () => {
     try {
       const response = await axios.get(
-        `http://192.168.100.7:3000/appointments/patient?idPatient=${idPatient}`
+        `http://192.168.2.102:3000/appointments/patient?idPatient=${idPatient}`
       );
       const data = response.data;
       setFetchResults(data);

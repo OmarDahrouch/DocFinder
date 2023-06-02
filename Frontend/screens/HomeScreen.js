@@ -64,17 +64,13 @@ const HomeScreen = ({ navigation }) => {
               backgroundColor: "#00a79d",
               borderRadius: 10,
               paddingVertical: 10,
-              paddingHorizontal: 20,
-              width: 210,
-              marginTop: 20,
-              marginLeft: "23%",
+              paddingHorizontal: 10,
               marginBottom: 50,
             }}
             titleStyle={{
               color: "white",
               fontWeight: "bold",
               fontSize: 14,
-              marginLeft: 10,
             }}
           />
           <Text style={styles.title2}>DocFinder : </Text>
@@ -111,19 +107,21 @@ const HomeScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: "auto",
   },
   container1: {
     flex: 1,
     backgroundColor: "#00a79d",
     alignItems: "center",
     alignContent: "center",
-    justifyContent: "flex-start",
-    padding: 60,
+    paddingVertical: 20,
+    paddingHorizontal: 10,
+    // justifyContent: "flex-start",
   },
   container2: {
     flex: 3,
+    padding: 20,
     backgroundColor: "#EFEFEF",
+    alignItems: "center",
   },
   title: {
     fontSize: 24,
@@ -134,42 +132,29 @@ const styles = StyleSheet.create({
     color: "black",
     fontSize: 20,
     fontWeight: "600",
-    marginLeft: "auto",
-    marginRight: "auto",
-  },
-  description: {
-    marginLeft: "12%",
-    marginRight: "12%",
-  },
-  scrollContainer: {
-    flexGrow: 1,
-    paddingBottom: 20,
+    marginBottom: 20,
   },
   LogoButton: {
-    flex: 1,
+    width: "100%",
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    marginTop: "-20%",
-    marginBottom: "-15%",
   },
   LogoWhite: {
-    width: 150,
+    width: 140,
     height: 100,
-    marginLeft: "auto",
-    marginRight: 120,
+  },
+  description: {
+    marginBottom: 20,
   },
   headerText: {
     color: "white",
-    marginLeft: "auto",
-    marginRight: -37,
     fontWeight: "bold",
   },
   Vectors: {
-    width: "40%",
-    height: "40%",
-    marginLeft: "auto",
-    marginRight: "auto",
+    width: 200,
+    height: 200,
+    marginHorizontal: 10,
   },
 });
 export default HomeScreen;

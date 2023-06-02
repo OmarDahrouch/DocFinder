@@ -23,7 +23,7 @@ const DoctorSignInScreen = () => {
   const onSignInPressed = async () => {
     try {
       const response = await axios.post(
-        "http://192.168.100.7:3000/doctor/signin",
+        "http://192.168.2.102:3000/doctor/signin",
         {
           email,
           password,

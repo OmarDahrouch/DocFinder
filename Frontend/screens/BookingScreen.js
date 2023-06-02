@@ -25,7 +25,8 @@ const BookingScreen = () => {
   const specialization = route.params?.specialization;
 
   const currentDate = new Date();
-
+  // const token = AsyncStorage.getItem("token");
+  // console.log(token);
   const formattedDate = currentDate.toDateString();
   const formatDate = (date) => {
     const options = {
@@ -68,7 +69,7 @@ const BookingScreen = () => {
     try {
       // Make API request to fetch available time slots for selectedDate
       const response = await axios.get(
-        `http://192.168.100.7:3000/appointment/data?day=${
+        `http://192.168.2.102:3000/appointment/data?day=${
           selectedDate.toISOString().split("T")[0]
         }&idDoctor=${IdDoctorB}`
       );
@@ -89,7 +90,7 @@ const BookingScreen = () => {
       }
 
       const response = await axios.post(
-        "http://192.168.100.7:3000/appointments",
+        "http://192.168.2.102:3000/appointments",
         {
           doctor_id: IdDoctorB,
           patient_id: patientId,

@@ -11,7 +11,7 @@ import DoctorSignInScreen from "../screens/DoctorsScreen/DoctorSignInScreen";
 import PatientAccount from "../screens/PatientAccount";
 import DoctorSignUpScreen from "../screens/DoctorsScreen/DoctorSignUpScreen";
 import DoctorAccount from "../screens/DoctorsScreen/DoctorAccount";
-import Appointments from "../screens/AppointmentsScreen"
+import Appointments from "../screens/AppointmentsScreen";
 
 const Stack = createNativeStackNavigator();
 
