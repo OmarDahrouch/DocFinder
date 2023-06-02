@@ -13,6 +13,7 @@ import axios from "axios";
 import { Divider } from "@react-native-material/core";
 import { Button } from "react-native-elements";
 import Icon from "react-native-vector-icons/FontAwesome";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const BookingScreen = () => {
   const route = useRoute();
@@ -24,7 +25,8 @@ const BookingScreen = () => {
   const specialization = route.params?.specialization;
 
   const currentDate = new Date();
-
+  // const token = AsyncStorage.getItem("token");
+  // console.log(token);
   const formattedDate = currentDate.toDateString();
   const formatDate = (date) => {
     const options = {

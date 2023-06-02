@@ -24,6 +24,9 @@ const SignInScreen = () => {
       );
 
       const token = response.data.token;
+      // const decodedToken = jwt.verify(token, "secretkey");
+      // const patientId = decodedToken.patientId;
+      // console.log(patientId);
       await AsyncStorage.setItem("token", token);
 
       console.log(response.data);
