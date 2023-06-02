@@ -1,12 +1,5 @@
 import React, { useEffect, useState } from "react";
-import {
-  StyleSheet,
-  View,
-  Text,
-  Image,
-  TouchableOpacity,
-  FlatList,
-} from "react-native";
+import { View, FlatList } from "react-native";
 import AppointmentsItem from "../components/AppointmentsItem";
 import axios from "axios";
 

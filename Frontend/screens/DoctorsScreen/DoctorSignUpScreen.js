@@ -137,12 +137,13 @@ const SignUpScreen = () => {
           value={description}
           onChangeText={setDescription}
         />
-        <CustomButton
-          text="Sign Up"
-          onPress={onSignUpPressed}
-          buttonStyle={styles.signUpButton}
-          textStyle={styles.signUpButtonText}
-        />
+        <View style={styles.signUpButton}>
+          <CustomButton
+            text="Sign Up"
+            onPress={onSignUpPressed}
+            bgColor="#00a79d"
+          />
+        </View>
       </View>
       <View style={styles.footer}>
         <TouchableOpacity onPress={onLogInPressed}>
@@ -156,10 +157,10 @@ const SignUpScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#F5F5F5",
+    backgroundColor: "#EFEFEF",
     justifyContent: "center",
     paddingHorizontal: 20,
-    paddingTop: -20,
+    paddingTop: 30,
   },
   header: {
     alignItems: "center",
@@ -174,9 +175,8 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   signUpButton: {
-    backgroundColor: "#00a79d",
-    borderRadius: 8,
-    paddingVertical: 14,
+    width: "100%",
+    marginTop: 20,
   },
   signUpButtonText: {
     color: "#FFFFFF",
@@ -188,7 +188,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   footerText: {
-    color: "#333333",
+    color: "gray",
     fontSize: 16,
   },
 });

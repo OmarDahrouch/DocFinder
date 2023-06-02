@@ -154,28 +154,11 @@ async function signinPatient(req, res) {
     // Generate a token
     const token = jwt.sign({ patientId: patient._id }, "secretkey");
 
-    res.json({ token });
+    res.json({ token, patientId: patient._id });
   } catch (error) {
     console.error(error);
     res.status(500).send("Error");
   }
-}
-
-function verifyToken(req, res, next) {
-  const token = req.headers.authorization;
-
-  if (!token) {
-    return res.status(401).json({ message: "Unauthorized" });
-  }
-
-  jwt.verify(token, "secretkey", (err, decoded) => {
-    if (err) {
-      return res.status(401).json({ message: "Invalid token" });
-    }
-
-    req.patientId = decoded.patientId;
-    next();
-  });
 }
 
 module.exports = {
@@ -185,5 +168,4 @@ module.exports = {
   deletePatient,
   signinPatient,
   getPatientAccount,
-  verifyToken,
 };

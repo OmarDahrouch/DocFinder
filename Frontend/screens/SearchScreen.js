@@ -61,11 +61,17 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   search: {
-    height: 50,
+    flexDirection: "row",
+    alignItems: "center",
+    backgroundColor: "#f2f2f2",
     borderRadius: 10,
+    paddingHorizontal: 10,
+    paddingVertical: 5,
+    marginHorizontal: 20,
+    marginVertical: 10,
   },
   input: {
-    height: 30,
+    height: 35,
   },
 });
 

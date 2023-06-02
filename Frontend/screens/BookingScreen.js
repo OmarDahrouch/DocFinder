@@ -9,11 +9,11 @@ import {
 } from "react-native";
 import { useRoute } from "@react-navigation/native";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
 import { Divider } from "@react-native-material/core";
 import { Button } from "react-native-elements";
 import Icon from "react-native-vector-icons/FontAwesome";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const BookingScreen = () => {
   const route = useRoute();
@@ -82,11 +82,18 @@ const BookingScreen = () => {
 
   const bookAppoin = async () => {
     try {
+      const patientId = await AsyncStorage.getItem("patientId");
+      if (!patientId) {
+        // Handle the case when patient ID is not found
+        Alert.alert("Error", "Patient ID not found. Please sign in again.");
+        return;
+      }
+
       const response = await axios.post(
         "http://192.168.2.102:3000/appointments",
         {
           doctor_id: IdDoctorB,
-          patient_id: "6466415f32496e2cc9854bb2",
+          patient_id: patientId,
           appointment_date: selectedDate.toISOString().split("T")[0],
           appointment_time: selectedTime,
           status: "non-confirmer",
@@ -94,8 +101,9 @@ const BookingScreen = () => {
       );
       console.log(response.data);
 
-      Alert.alert("Success", "book appointment successful");
+      Alert.alert("Success", "Book appointment successful");
     } catch (error) {
+      console.log(error);
       Alert.alert("Error", "Failed to book appointment. Please try again.");
     }
   };

@@ -6,8 +6,8 @@ const {
   updatePatient,
   deletePatient,
   signinPatient,
-  verifyToken,
   getPatientAccount,
+  getCurrentPatientID,
 } = require("../controllers/authController");
 
 // Route to post a new patient
