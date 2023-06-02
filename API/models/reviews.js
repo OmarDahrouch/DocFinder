@@ -2,7 +2,9 @@ const mongoose = require("mongoose");
 
 const reviewSchema = new mongoose.Schema({
   review_number: { type: String, required: true },
-  doctor_id: { type: String, required: true },
+  doctor_id: {     
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Doctor", required: true },
   patient_id: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "Patient",

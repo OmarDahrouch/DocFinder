@@ -30,8 +30,9 @@ const SignInScreen = () => {
         }
       );
 
-      const token = response.data.token;
+      const { token, patientId } = response.data;
       await AsyncStorage.setItem("token", token);
+      await AsyncStorage.setItem("patientId", patientId);
 
       console.log(response.data);
       setEmail("");

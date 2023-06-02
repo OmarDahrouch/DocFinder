@@ -10,6 +10,9 @@ const DoctorItem = ({ doctor, navigation }) => {
           first_name: doctor.first_name,
           last_name: doctor.last_name,
           specialization: doctor.specialization,
+          city: doctor.city,
+          zip: doctor.zip,
+          description: doctor.description,
           adress: doctor.adress,
         });
       }}
@@ -25,7 +28,7 @@ const DoctorItem = ({ doctor, navigation }) => {
               {doctor.first_name} {doctor.last_name}
             </Text>
             <Text style={styles.specialization}>{doctor.specialization}</Text>
-            <Text style={styles.adress}>{doctor.adress}</Text>
+            <Text style={styles.location}>{doctor.city}</Text>
           </View>
         </View>
       </View>

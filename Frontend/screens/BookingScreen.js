@@ -9,6 +9,7 @@ import {
 } from "react-native";
 import { useRoute } from "@react-navigation/native";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
 import { Divider } from "@react-native-material/core";
 import { Button } from "react-native-elements";
@@ -39,7 +40,6 @@ const BookingScreen = () => {
   const [selectedDate, setSelectedDate] = useState(currentDate);
   const [selectedTime, setSelectedTime] = useState(null);
   const [timeSlots, setTimeSlots] = useState([]);
-  const [patientId, setPatientId] = useState(""); // Added state for patientId
 
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
 
@@ -53,19 +53,8 @@ const BookingScreen = () => {
   console.log(selectedDate);
 
   useEffect(() => {
-    fetchPatientId(); // Fetch the patientId on component mount
     fetchAvailableSlots(selectedDate, IdDoctorB);
   }, []);
-
-  const fetchPatientId = async () => {
-    try {
-      const response = await axios.get("http://192.168.100.7:3000/patient/ID");
-      const { patientId } = response.data;
-      setPatientId(patientId);
-    } catch (error) {
-      console.error("Failed to fetch patient ID:", error);
-    }
-  };
 
   const handleConfirm = (date) => {
     setSelectedDate(date);
@@ -92,11 +81,18 @@ const BookingScreen = () => {
 
   const bookAppoin = async () => {
     try {
+      const patientId = await AsyncStorage.getItem("patientId");
+      if (!patientId) {
+        // Handle the case when patient ID is not found
+        Alert.alert("Error", "Patient ID not found. Please sign in again.");
+        return;
+      }
+
       const response = await axios.post(
         "http://192.168.100.7:3000/appointments",
         {
           doctor_id: IdDoctorB,
-          patient_id: patientId, // Use the fetched patientId
+          patient_id: patientId,
           appointment_date: selectedDate.toISOString().split("T")[0],
           appointment_time: selectedTime,
           status: "non-confirmer",
@@ -104,8 +100,9 @@ const BookingScreen = () => {
       );
       console.log(response.data);
 
-      Alert.alert("Success", "book appointment successful");
+      Alert.alert("Success", "Book appointment successful");
     } catch (error) {
+      console.log(error);
       Alert.alert("Error", "Failed to book appointment. Please try again.");
     }
   };

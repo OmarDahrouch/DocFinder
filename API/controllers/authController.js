@@ -62,24 +62,6 @@ async function getPatientAccount(req, res) {
   }
 }
 
-async function getCurrentPatientID(req, res) {
-  try {
-    // Verify the token
-    const token = req.headers.authorization;
-    if (!token) {
-      return res.status(401).json({ message: "Unauthorized" });
-    }
-
-    const decodedToken = jwt.verify(token, "secretkey");
-    const patientId = decodedToken.patientId;
-
-    return patientId;
-  } catch (error) {
-    console.error(error);
-    res.status(500).send("Error");
-  }
-}
-
 // Get all patients or signed in patient
 
 function getPatients(req, res) {
@@ -172,7 +154,7 @@ async function signinPatient(req, res) {
     // Generate a token
     const token = jwt.sign({ patientId: patient._id }, "secretkey");
 
-    res.json({ token });
+    res.json({ token, patientId: patient._id });
   } catch (error) {
     console.error(error);
     res.status(500).send("Error");
@@ -186,5 +168,4 @@ module.exports = {
   deletePatient,
   signinPatient,
   getPatientAccount,
-  getCurrentPatientID,
 };
