@@ -93,6 +93,7 @@ const PatientAccount = ({ navigation }) => {
   const handleSignOut = async () => {
     try {
       await AsyncStorage.removeItem("token");
+      await AsyncStorage.removeItem("patientId");
       navigation.navigate("SignIn");
     } catch (error) {
       console.error(error);
