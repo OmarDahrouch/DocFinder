@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import {
   View,
   StyleSheet,
@@ -9,8 +9,36 @@ import {
 } from "react-native";
 import { Button } from "react-native-elements";
 import Icon from "react-native-vector-icons/FontAwesome";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const HomeScreen = ({ navigation }) => {
+  const Loginout = async () => {
+    try {
+      const idPatient = await AsyncStorage.getItem("patientId");
+
+      if (!idPatient) {
+        return (
+          <TouchableOpacity
+            onPress={() => {
+              navigation.navigate("SignIn");
+            }}
+          >
+            <Text style={styles.headerText}>Se Connecter</Text>
+          </TouchableOpacity>
+        );
+      }
+      return (
+        <TouchableOpacity
+          onPress={() => {
+            console.log("logout");
+          }}
+        >
+          <Text style={styles.headerText}>Se déconnecter</Text>
+        </TouchableOpacity>
+      );
+    } catch (error) {}
+  };
+
   return (
     <ScrollView contentContainerStyle={styles.scrollContainer}>
       <View style={styles.container}>
@@ -74,13 +102,13 @@ const HomeScreen = ({ navigation }) => {
             }}
           />
           <Text style={styles.title2}>DocFinder : </Text>
+          <Text style={styles.title2}>au service de votre santé </Text>
           <Image
-            source={require("../assets/images/AppSecurity.png")}
+            source={require("../assets/images/doc.png")}
             style={styles.Vectors}
           />
           <Text style={styles.description}>
-            DocFinder accorde la priorité à la sécurité des utilisateurs grâce à
-            des pratiques de codage sécurisées.
+            Accédez rapidement aux disponibilités de tous vos médecins
           </Text>
           <Image
             source={require("../assets/images/TechSante.png")}
@@ -96,7 +124,7 @@ const HomeScreen = ({ navigation }) => {
           />
           <Text style={styles.description}>
             DocFinder accorde la priorité à la sécurité des utilisateurs grâce à
-            des pratiques de codage sécurisées
+            des pratiques de codage sécurisées.
           </Text>
         </View>
       </View>
@@ -132,7 +160,6 @@ const styles = StyleSheet.create({
     color: "black",
     fontSize: 20,
     fontWeight: "600",
-    marginBottom: 20,
   },
   LogoButton: {
     width: "100%",
@@ -146,6 +173,7 @@ const styles = StyleSheet.create({
   },
   description: {
     marginBottom: 20,
+    textAlign: "center",
   },
   headerText: {
     color: "white",
@@ -154,7 +182,7 @@ const styles = StyleSheet.create({
   Vectors: {
     width: 200,
     height: 200,
-    marginHorizontal: 10,
+    marginVertical: 10,
   },
 });
 export default HomeScreen;

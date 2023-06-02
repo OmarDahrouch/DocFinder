@@ -12,61 +12,99 @@ import PatientAccount from "../screens/PatientAccount";
 import DoctorSignUpScreen from "../screens/DoctorsScreen/DoctorSignUpScreen";
 import DoctorAccount from "../screens/DoctorsScreen/DoctorAccount";
 import Appointments from "../screens/AppointmentsScreen";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { Ionicons } from "@expo/vector-icons";
 
 const Stack = createNativeStackNavigator();
+const Tab = createBottomTabNavigator();
 
 const Navigation = () => {
   return (
     <NavigationContainer>
-      <Stack.Navigator>
-        <Stack.Screen
+      <Tab.Navigator
+        screenOptions={({ route }) => ({
+          tabBarIcon: ({ color, size }) => {
+            let iconName;
+
+            if (route.name === "Home") {
+              iconName = "home";
+            } else if (route.name === "Recherche") {
+              iconName = "search";
+            } else if (route.name === "Appointments") {
+              iconName = "calendar";
+            } else if (route.name === "Account") {
+              iconName = "person";
+            }
+
+            return <Ionicons name={iconName} size={size} color={color} />;
+          },
+        })}
+        tabBarOptions={{
+          activeTintColor: "#00a79d",
+          inactiveTintColor: "gray",
+        }}
+      >
+        <Tab.Screen
           name="Home"
-          component={HomeScreen}
-          options={{
-            headerShown: false,
-            headerTitle: "",
-            headerStyle: {
-              backgroundColor: "#00a79d",
-              height: 6,
-            },
-          }}
+          component={HomeStack}
+          options={{ headerShown: false }}
         />
-        <Stack.Screen name="Recherche" component={BarSearch} />
-        <Stack.Screen name="DoctorDetails" component={DoctorDetailsScreen} />
-        <Stack.Screen
-          name="SignIn"
-          component={SignInScreen}
-          options={{
-            headerShown: false,
-          }}
-        />
-        <Stack.Screen
-          name="DoctorSignIn"
-          component={DoctorSignInScreen}
-          options={{
-            headerShown: false,
-          }}
-        />
-        <Stack.Screen
-          name="SignUp"
-          component={SignUpScreen}
-          options={{
-            headerShown: false,
-          }}
-        />
-        <Stack.Screen
-          name="DoctorSignUp"
-          component={DoctorSignUpScreen}
-          options={{
-            headerShown: false,
-          }}
-        />
-        <Stack.Screen name="PatientAccount" component={PatientAccount} />
-        <Stack.Screen name="BookingScreen" component={BookingScreen} />
-        <Stack.Screen name="DoctorAccount" component={DoctorAccount} />
-        <Stack.Screen name="Appointments" component={Appointments} />
-      </Stack.Navigator>
+        <Tab.Screen name="Recherche" component={BarSearch} />
+        <Tab.Screen name="Appointments" component={Appointments} />
+        <Tab.Screen name="Account" component={AccountStack} />
+      </Tab.Navigator>
     </NavigationContainer>
+  );
+};
+
+const HomeStack = () => {
+  return (
+    <Stack.Navigator>
+      <Stack.Screen
+        name="Home"
+        component={HomeScreen}
+        options={{
+          headerShown: false,
+        }}
+      />
+      <Stack.Screen name="Recherche" component={BarSearch} />
+      <Stack.Screen name="DoctorDetails" component={DoctorDetailsScreen} />
+      <Stack.Screen name="BookingScreen" component={BookingScreen} />
+      <Stack.Screen name="Appointments" component={Appointments} />
+    </Stack.Navigator>
+  );
+};
+
+const AccountStack = () => {
+  return (
+    <Stack.Navigator>
+      <Stack.Screen
+        name="PatientAccount"
+        component={PatientAccount}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="SignIn"
+        component={SignInScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="DoctorSignIn"
+        component={DoctorSignInScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="SignUp"
+        component={SignUpScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="DoctorSignUp"
+        component={DoctorSignUpScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen name="DoctorAccount" component={DoctorAccount} />
+    </Stack.Navigator>
   );
 };
 

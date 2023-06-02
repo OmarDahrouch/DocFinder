@@ -15,7 +15,7 @@ import { Divider } from "@react-native-material/core";
 import { Button } from "react-native-elements";
 import Icon from "react-native-vector-icons/FontAwesome";
 
-const BookingScreen = () => {
+const BookingScreen = ({ navigation }) => {
   const route = useRoute();
 
   const IdDoctorB = route.params?.iddoctor;
@@ -102,6 +102,7 @@ const BookingScreen = () => {
       console.log(response.data);
 
       Alert.alert("Success", "Book appointment successful");
+      navigation.navigate("Appointments");
     } catch (error) {
       console.log(error);
       Alert.alert("Error", "Failed to book appointment. Please try again.");

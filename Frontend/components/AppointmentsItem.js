@@ -14,7 +14,6 @@ const AppointmentsItem = ({ appointments, navigation }) => {
   const date = new Date(dateString);
   const options = { month: "long", day: "numeric", year: "numeric" };
   const formattedDate = date.toLocaleDateString(undefined, options);
-  console.log(formattedDate);
 
   return (
     <TouchableOpacity
