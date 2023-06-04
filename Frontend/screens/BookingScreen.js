@@ -147,7 +147,7 @@ const BookingScreen = ({ navigation }) => {
       </View>
       <Divider />
       <View style={styles.dayTime}>
-        <Text style={styles.Text}>Pick a day</Text>
+        <Text style={styles.Text}>Choisisseez la date:</Text>
         <View style={styles.day}>
           <Button
             onPress={showDatePicker}
@@ -167,7 +167,7 @@ const BookingScreen = ({ navigation }) => {
           minimumDate={new Date(formattedDate)}
         />
         <Divider />
-        <Text style={styles.Text}>Pick a time</Text>
+        <Text style={styles.Text}>Choisisseez le temps:</Text>
         <View style={styles.containerTimeSlotes}>{renderTimeSlots()}</View>
       </View>
       <Divider />
