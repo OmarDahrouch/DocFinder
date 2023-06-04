@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   View,
   StyleSheet,
@@ -12,31 +12,54 @@ import Icon from "react-native-vector-icons/FontAwesome";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const HomeScreen = ({ navigation }) => {
-  const Loginout = async () => {
-    try {
-      const idPatient = await AsyncStorage.getItem("patientId");
+  const [isLoggedOut, setIsLoggedOut] = useState(true);
 
-      if (!idPatient) {
-        return (
-          <TouchableOpacity
-            onPress={() => {
-              navigation.navigate("SignIn");
-            }}
-          >
-            <Text style={styles.headerText}>Se Connecter</Text>
-          </TouchableOpacity>
-        );
+  const handleSignOut = async () => {
+    try {
+      // Perform the sign out logic
+      await AsyncStorage.removeItem("token");
+      await AsyncStorage.removeItem("patientId");
+      setIsLoggedOut(true);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  useEffect(() => {
+    const checkLoginStatus = async () => {
+      try {
+        const idPatient = await AsyncStorage.getItem("patientId");
+        setIsLoggedOut(!idPatient);
+      } catch (error) {
+        console.error(error);
       }
+    };
+
+    checkLoginStatus();
+  }, []);
+
+  const renderLoginButton = () => {
+    if (isLoggedOut) {
       return (
         <TouchableOpacity
           onPress={() => {
-            console.log("logout");
+            navigation.navigate("SignIn");
           }}
         >
-          <Text style={styles.headerText}>Se déconnecter</Text>
+          <Text style={styles.headerText}>Se Connecter</Text>
         </TouchableOpacity>
       );
-    } catch (error) {}
+    } else {
+      return (
+        <TouchableOpacity
+          onPress={() => {
+            handleSignOut();
+          }}
+        >
+          <Text style={styles.headerText}>Se Déconnecter</Text>
+        </TouchableOpacity>
+      );
+    }
   };
 
   return (
@@ -48,13 +71,7 @@ const HomeScreen = ({ navigation }) => {
               source={require("../assets/images/LogoWhite.png")}
               style={styles.LogoWhite}
             />
-            <TouchableOpacity
-              onPress={() => {
-                navigation.navigate("SignIn");
-              }}
-            >
-              <Text style={styles.headerText}>Se Connecter</Text>
-            </TouchableOpacity>
+            {renderLoginButton()}
           </View>
           <Text style={styles.title}>Trouvez un rendez-vous </Text>
           <Text style={styles.title}>avec </Text>

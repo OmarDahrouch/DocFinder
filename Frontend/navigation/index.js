@@ -26,13 +26,13 @@ const Navigation = () => {
           tabBarIcon: ({ color, size }) => {
             let iconName;
 
-            if (route.name === "Home") {
+            if (route.name === "Accueil") {
               iconName = "home";
             } else if (route.name === "Recherche") {
               iconName = "search";
-            } else if (route.name === "Appointments") {
+            } else if (route.name === "Rendez-vous") {
               iconName = "calendar";
-            } else if (route.name === "Account") {
+            } else if (route.name === "Compte") {
               iconName = "person";
             }
 
@@ -45,13 +45,17 @@ const Navigation = () => {
         }}
       >
         <Tab.Screen
-          name="Home"
+          name="Accueil"
           component={HomeStack}
           options={{ headerShown: false }}
         />
         <Tab.Screen name="Recherche" component={BarSearch} />
-        <Tab.Screen name="Appointments" component={Appointments} />
-        <Tab.Screen name="Account" component={AccountStack} />
+        <Tab.Screen
+          name="Rendez-vous"
+          component={Appointments}
+          title="Rendez-vous"
+        />
+        <Tab.Screen name="Compte" component={AccountStack} />
       </Tab.Navigator>
     </NavigationContainer>
   );

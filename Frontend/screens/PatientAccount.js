@@ -112,14 +112,14 @@ const PatientAccount = ({ navigation }) => {
     <ScrollView contentContainerStyle={styles.scrollContainer}>
       <View style={styles.container}>
         <Logo style={styles.logo} />
-        <Text style={styles.label}>First name</Text>
+        <Text style={styles.label}>Prénom</Text>
         <View style={styles.infoContainer}>
           <CustomInput
             value={patientFirstName}
             onChangeText={setPatientFirstName}
           />
         </View>
-        <Text style={styles.label}>Last name</Text>
+        <Text style={styles.label}>Nom</Text>
         <View style={styles.infoContainer}>
           <CustomInput
             value={patientLastName}
@@ -130,14 +130,14 @@ const PatientAccount = ({ navigation }) => {
         <View style={styles.infoContainer}>
           <CustomInput value={patientEmail} onChangeText={setPatientEmail} />
         </View>
-        <Text style={styles.label}>Phone number</Text>
+        <Text style={styles.label}>Telephone</Text>
         <View style={styles.infoContainer}>
           <CustomInput
             value={patientPhoneNumber}
             onChangeText={setPatientPhoneNumber}
           />
         </View>
-        <Text style={styles.label}>Address</Text>
+        <Text style={styles.label}>Adresse</Text>
         <View style={styles.infoContainer}>
           <CustomInput
             value={patientAddress}

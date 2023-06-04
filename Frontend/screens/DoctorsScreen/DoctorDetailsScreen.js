@@ -27,7 +27,7 @@ const DoctorDetailsScreen = ({ route, navigation }) => {
         <Text style={styles.label}>{specialization}</Text>
 
         <Button
-          title="Book an appointment"
+          title="Prendre rendez-vous"
           onPress={() => {
             navigation.navigate("BookingScreen", {
               iddoctor,
